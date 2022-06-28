@@ -1,4 +1,4 @@
-package security;
+package com.controlaltinsert.parkshark.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
