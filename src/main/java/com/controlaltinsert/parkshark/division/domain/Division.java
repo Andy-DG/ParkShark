@@ -1,4 +1,4 @@
-package com.controlaltinsert.parkshark.division;
+package com.controlaltinsert.parkshark.division.domain;
 
 import com.controlaltinsert.parkshark.employee.Employee;
 
@@ -35,5 +35,21 @@ public class Division {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 }

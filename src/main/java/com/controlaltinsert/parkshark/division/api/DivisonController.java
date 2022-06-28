@@ -1,4 +1,4 @@
-package com.controlaltinsert.parkshark.division;
+package com.controlaltinsert.parkshark.division.api;
 
 import org.springframework.web.bind.annotation.RestController;
 

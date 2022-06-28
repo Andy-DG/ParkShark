@@ -18,6 +18,7 @@ log on creation
 
 
 FOR DTO'S
+```
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
@@ -28,6 +29,7 @@ private String description;
 private double price;
 private int stock;
 }
+```
 
 
 # Kanban
