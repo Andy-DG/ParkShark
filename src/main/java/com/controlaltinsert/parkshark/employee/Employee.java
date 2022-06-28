@@ -1,7 +1,7 @@
 package com.controlaltinsert.parkshark.employee;
 
 
-import com.controlaltinsert.parkshark.address.Address;
+import com.controlaltinsert.parkshark.support.address.domain.Address;
 
 import javax.persistence.*;
 

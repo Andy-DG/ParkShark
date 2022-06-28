@@ -1,5 +1,6 @@
 package com.controlaltinsert.parkshark.parkinglot.domain;
 
+import com.controlaltinsert.parkshark.employee.Employee;
 import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 public class ParkingLot {
-    private static Logger logger = LoggerFactory.getLogger(ParkingLot.class.getName());
+    private static final Logger parkingLotLogger = LoggerFactory.getLogger(ParkingLot.class.getName());
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PARKING_LOT_ID_SEQ")
@@ -62,7 +63,7 @@ public class ParkingLot {
     private int validateMaxCapacity(int maxCapacity) {
         if(maxCapacity < 0){
             String message = "Max capacity must be more than zero";
-            logger.error(message);
+            parkingLotLogger.error(message);
             throw new IllegalArgumentException(message);
         }
         return maxCapacity;
@@ -75,7 +76,7 @@ public class ParkingLot {
     private double validatePricePerHour(double pricePerHour) {
         if(pricePerHour <= 0){
             String message = "Price per hour cannot be less than or equal to zero";
-            logger.error(message);
+            parkingLotLogger.error(message);
             throw new IllegalArgumentException(message);
         }
         return pricePerHour;
@@ -88,7 +89,7 @@ public class ParkingLot {
     private Employee validateEmployee(Employee contactPerson) {
         if(contactPerson == null){
             String message = "ContactPerson cannot be null";
-            logger.error(message);
+            parkingLotLogger.error(message);
             throw new IllegalArgumentException(message);
         }
         return contactPerson;
@@ -98,7 +99,7 @@ public class ParkingLot {
     private String validateName(String name){
         if(name == null || name.isBlank()){
             String message = "Name cannot be null";
-            logger.error(message);
+            parkingLotLogger.error(message);
             throw new IllegalArgumentException(message);
         }
         return name;
@@ -107,8 +108,8 @@ public class ParkingLot {
     private Category validateCategory(Category category){
         if(category == null){
             String message = "Category cannot be null";
-            logger.error(message);
-            throw new IllegalArgumentException(message)
+            parkingLotLogger.error(message);
+            throw new IllegalArgumentException(message);
         }
         return category;
     }
