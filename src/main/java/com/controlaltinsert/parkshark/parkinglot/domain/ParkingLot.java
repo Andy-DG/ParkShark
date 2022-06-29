@@ -16,7 +16,7 @@ public class ParkingLot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PARKING_LOT_ID_SEQ")
-    @SequenceGenerator(name = "PARKING_LOT_ID_SEQ", sequenceName = "PARKING_LOT_ID_SEQ", allocationSize = 1)
+    @SequenceGenerator(name = "PARKING_LOT_ID_SEQ", sequenceName = "PARKING_LOT_id_seq", allocationSize = 1)
     private int id;
 
     @Column(name = "name")

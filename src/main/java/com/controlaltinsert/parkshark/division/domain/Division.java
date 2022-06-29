@@ -14,12 +14,12 @@ import javax.persistence.*;
 @ToString
 @AllArgsConstructor
 public class Division {
-
+    @Transient
     private static final Logger divisionLogger = LoggerFactory.getLogger(Division.class.getName());
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DIVISION_SEQUENCE")
-    @SequenceGenerator(name = "DIVISION_SEQUENCE", sequenceName = "division_sequence", allocationSize = 1)
+    @SequenceGenerator(name = "DIVISION_SEQUENCE", sequenceName = "DIVISION_id_seq", allocationSize = 1)
     private int id;
 
     @Column
@@ -28,9 +28,13 @@ public class Division {
     @Column
     private String originalName;
 
-    @OneToOne
-    @JoinColumn(name = "director_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_director_id")
     private Employee director;
+
+    public void setDirector(Employee director) {
+        this.director = director;
+    }
 
     public Division(String name, String originalName, Employee director){
         this.name = validateName(name);

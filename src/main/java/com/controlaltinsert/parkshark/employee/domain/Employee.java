@@ -28,7 +28,7 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq")
-    @SequenceGenerator(name = "employee_seq")
+    @SequenceGenerator(name = "employee_seq", sequenceName = "EMPLOYEE_id_seq")
     private int id;
 
     @Column(name = "first_name")
