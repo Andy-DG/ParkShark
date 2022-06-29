@@ -28,8 +28,8 @@ public class Employee {
     private final Logger employeeLogger = LoggerFactory.getLogger(Employee.class);
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq")
-    @SequenceGenerator(name = "employee_seq", sequenceName = "EMPLOYEE_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EMPLOYEE_id_seq")
+    @SequenceGenerator(name = "EMPLOYEE_id_seq", sequenceName = "EMPLOYEE_id_seq", allocationSize = 1)
     private int id;
 
     @Column(name = "first_name")
