@@ -24,7 +24,7 @@ public class Address {
     @Column(name = "street_name")
     private String streetName;
 
-    @Column(name = "street_name")
+    @Column(name = "street_number")
     private int streetNumber;
 
     @ManyToOne(cascade = CascadeType.MERGE)
