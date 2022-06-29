@@ -1,5 +1,6 @@
 package com.controlaltinsert.parkshark.division.api.dto;
 
+import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,5 +16,5 @@ public class DivisionDTO {
 
     private String originalName;
 
-    private Employee director;
+    private EmployeeDTO director;
 }

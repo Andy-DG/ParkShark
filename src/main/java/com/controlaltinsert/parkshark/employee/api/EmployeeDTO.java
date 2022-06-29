@@ -1,12 +1,11 @@
 package com.controlaltinsert.parkshark.employee.api;
 
+import com.controlaltinsert.parkshark.support.address.api.AddressDTO;
 import com.controlaltinsert.parkshark.support.address.domain.Address;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -14,11 +13,12 @@ import javax.persistence.ManyToOne;
 @AllArgsConstructor
 @Builder
 @ToString
+@Getter
 public class EmployeeDTO {
     private int id;
     private String firstName;
     private String lastName;
-    private Address address;
+    private AddressDTO address;
     private String phoneNumber;
     private String mobilePhoneNumber;
     private String email;

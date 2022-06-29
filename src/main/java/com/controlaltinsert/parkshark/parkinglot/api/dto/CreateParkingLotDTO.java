@@ -1,5 +1,6 @@
 package com.controlaltinsert.parkshark.parkinglot.api.dto;
 
+import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.parkinglot.domain.Category;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,6 @@ public class CreateParkingLotDTO {
     private Category category;
     private int maxCapacity;
     private double pricePerHour;
-    private Employee contactPerson;
+    private EmployeeDTO contactPerson;
 
 }

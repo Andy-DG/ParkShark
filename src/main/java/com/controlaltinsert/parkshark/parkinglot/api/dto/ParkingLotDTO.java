@@ -1,6 +1,7 @@
 package com.controlaltinsert.parkshark.parkinglot.api.dto;
 
 
+import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.parkinglot.domain.Category;
 import lombok.*;
@@ -16,7 +17,7 @@ public class ParkingLotDTO {
     private Category category;
     private int maxCapacity;
     private double pricePerHour;
-    private Employee contactPerson;
+    private EmployeeDTO contactPerson;
 
     public int getId() {
         return id;
@@ -58,11 +59,11 @@ public class ParkingLotDTO {
         this.pricePerHour = pricePerHour;
     }
 
-    public Employee getContactPerson() {
+    public EmployeeDTO getContactPerson() {
         return contactPerson;
     }
 
-    public void setContactPerson(Employee contactPerson) {
+    public void setContactPerson(EmployeeDTO contactPerson) {
         this.contactPerson = contactPerson;
     }
 }
