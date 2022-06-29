@@ -2,16 +2,19 @@ package com.controlaltinsert.parkshark.parkinglot.service;
 
 import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
+import com.controlaltinsert.parkshark.employee.domain.EmployeeRepository;
 import com.controlaltinsert.parkshark.employee.service.EmployeeMapper;
+import com.controlaltinsert.parkshark.employee.service.EmployeeService;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.CreateParkingLotDTO;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotDTO;
 import com.controlaltinsert.parkshark.parkinglot.domain.Category;
 import com.controlaltinsert.parkshark.parkinglot.domain.ParkingLot;
 import com.controlaltinsert.parkshark.parkinglot.domain.ParkingLotRepository;
 import com.controlaltinsert.parkshark.support.address.api.AddressDTO;
-import com.controlaltinsert.parkshark.support.address.domain.AddressRepository;
+import com.controlaltinsert.parkshark.support.address.domain.Address;
 import com.controlaltinsert.parkshark.support.address.service.AddressMapper;
 import com.controlaltinsert.parkshark.support.postalcode.api.PostalCodeDTO;
+import com.controlaltinsert.parkshark.support.postalcode.domain.PostalCode;
 import com.controlaltinsert.parkshark.support.postalcode.service.PostalCodeMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,21 +22,24 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @ExtendWith(MockitoExtension.class)
 class ParkingLotServiceUnitTest {
     private static int id = 1111111;
-
+    private Employee contactperson = new Employee("Andy", "Builder",
+            new Address("Haaistraat", 6, new PostalCode("8000", "Bruhhe")),
+            "+32123456789", "", "andy@parkshark.be");
 
     private ParkingLotMapper parkingLotMapper;
     private EmployeeMapper employeeMapper;
+    private EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
     private PostalCodeMapper postalCodeMapper;
     private AddressMapper addressMapper;
     private ParkingLotRepository parkingLotRepository;
@@ -42,13 +48,15 @@ class ParkingLotServiceUnitTest {
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         postalCodeMapper = new PostalCodeMapper();
         addressMapper = new AddressMapper(postalCodeMapper);
         employeeMapper = new EmployeeMapper(addressMapper);
+        employeeRepository = Mockito.mock(EmployeeRepository.class);
+        employeeService = new EmployeeService(employeeRepository);
         parkingLotMapper = new ParkingLotMapper(employeeMapper);
         parkingLotRepository = Mockito.mock(ParkingLotRepository.class);
-        parkingLotService = new ParkingLotService(parkingLotMapper, parkingLotRepository);
+        parkingLotService = new ParkingLotService(parkingLotMapper, parkingLotRepository, employeeService);
 
         PostalCodeDTO postalCodeDTO = new PostalCodeDTO(1000, "E1000", "Edingburg");
         AddressDTO addressDTO = new AddressDTO(40, "RockLane", 15, postalCodeDTO);
@@ -63,10 +71,10 @@ class ParkingLotServiceUnitTest {
                 .maxCapacity(150)
                 .pricePerHour(4.20)
                 .category(Category.UNDERGROUND)
-                .contactPerson(employeeDTO)
+                .contactPersonId(contactperson.getId())
                 .build();
 
-        ParkingLot returnedParkingLot = this.parkingLotMapper.toEntity(createParkingLotDTO);
+        ParkingLot returnedParkingLot = this.parkingLotMapper.toEntity(createParkingLotDTO, contactperson);
         ParkingLotDTO lotDTO = this.parkingLotMapper.toDTO(returnedParkingLot);
         lotDTO.setId(id);
 
@@ -107,7 +115,7 @@ class ParkingLotServiceUnitTest {
                 .maxCapacity(150)
                 .pricePerHour(4.20)
                 .category(Category.UNDERGROUND)
-                .contactPerson(employeeDTO) //<- TODO
+                .contactPersonId(contactperson.getId())
                 .build();
 
         assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO));
@@ -121,7 +129,7 @@ class ParkingLotServiceUnitTest {
                 .maxCapacity(-1)
                 .pricePerHour(4.20)
                 .category(Category.UNDERGROUND)
-                .contactPerson(employeeDTO) //<- TODO
+                .contactPersonId(contactperson.getId())
                 .build();
 
         assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO));
@@ -135,7 +143,7 @@ class ParkingLotServiceUnitTest {
                 .maxCapacity(10)
                 .pricePerHour(0)
                 .category(Category.UNDERGROUND)
-                .contactPerson(employeeDTO) //<- TODO
+                .contactPersonId(contactperson.getId())
                 .build();
 
         assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO));
@@ -149,14 +157,12 @@ class ParkingLotServiceUnitTest {
                 .maxCapacity(0)
                 .pricePerHour(4.20)
                 .category(null)
-                .contactPerson(employeeDTO) //<- TODO
+                .contactPersonId(contactperson.getId())
                 .build();
 
         assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO));
 
     }
-
-
 
 
 }

@@ -2,6 +2,7 @@ package com.controlaltinsert.parkshark.employee.service;
 
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.employee.domain.EmployeeRepository;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -10,11 +11,14 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class EmployeeService {
 
     private final Logger employeeServiceLogger = LoggerFactory.getLogger(EmployeeService.class);
 
     EmployeeRepository employeeRepository;
+
+
 
     public Employee getEmployeeById(int directorId) {
         Employee director = employeeRepository.findById(directorId).orElse(null);

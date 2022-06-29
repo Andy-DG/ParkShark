@@ -5,7 +5,9 @@ import com.controlaltinsert.parkshark.division.api.dto.DivisionDTO;
 import com.controlaltinsert.parkshark.division.domain.Division;
 import com.controlaltinsert.parkshark.division.domain.DivisionRepository;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
+import com.controlaltinsert.parkshark.employee.domain.EmployeeRepository;
 import com.controlaltinsert.parkshark.employee.service.EmployeeMapper;
+import com.controlaltinsert.parkshark.employee.service.EmployeeService;
 import com.controlaltinsert.parkshark.support.address.domain.Address;
 import com.controlaltinsert.parkshark.support.address.service.AddressMapper;
 import com.controlaltinsert.parkshark.support.postalcode.domain.PostalCode;
@@ -21,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DivisionServiceTest {
-    private int id = 11;
+    private int id = 1;
     private String name = "ParkShark Ghelamco";
     private String originalName = "Parking Service Buffalo K.A.A. Gent Ghelamco";
     private Address address = new Address("Hoheloon", 7, new PostalCode("B4400", "Zulu"));
@@ -30,6 +32,8 @@ class DivisionServiceTest {
     private PostalCodeMapper postalCodeMapper;
     private AddressMapper addressMapper;
     private EmployeeMapper employeeMapper;
+    private EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
     private DivisionMapper divisionMapper;
     private DivisionService divisionService;
     private DivisionRepository divisionRepository;
@@ -39,9 +43,11 @@ class DivisionServiceTest {
         postalCodeMapper = new PostalCodeMapper();
         addressMapper = new AddressMapper(postalCodeMapper);
         employeeMapper = new EmployeeMapper(addressMapper);
+        employeeRepository = Mockito.mock(EmployeeRepository.class);
+        employeeService = new EmployeeService(employeeRepository);
         divisionMapper = new DivisionMapper(employeeMapper);
         divisionRepository = Mockito.mock(DivisionRepository.class);
-        divisionService = new DivisionService(divisionRepository, divisionMapper);
+        divisionService = new DivisionService(divisionRepository, divisionMapper, employeeService);
     }
 
     @Test
@@ -51,9 +57,9 @@ class DivisionServiceTest {
         //given
         divisionService = Mockito.mock(DivisionService.class);
 
-        CreateDivisionDTO expected = new CreateDivisionDTO(name, originalName, employeeMapper.toDTO(director));
+        CreateDivisionDTO expected = new CreateDivisionDTO(name, originalName, director.getId());
 
-        Division returnedDivision = divisionMapper.toEntity(expected);
+        Division returnedDivision = divisionMapper.toEntity(expected,director);
         DivisionDTO divisionDTO = divisionMapper.toDTO(returnedDivision);
         divisionDTO.setId(id);
 
@@ -66,7 +72,7 @@ class DivisionServiceTest {
         //then
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getOriginalName(), actual.getOriginalName());
-        assertEquals(expected.getDirector(), actual.getDirector());
+        assertEquals(expected.getDirectorId(), actual.getDirectorId());
         assertEquals(id, actual.getId());
     }
 
@@ -77,7 +83,7 @@ class DivisionServiceTest {
 
  //given
         name = nullAndEmpty;
-        CreateDivisionDTO createDivisionDTO = new CreateDivisionDTO(name, originalName, employeeMapper.toDTO(director));
+        CreateDivisionDTO createDivisionDTO = new CreateDivisionDTO(name, originalName, director.getId());
 
 
  //when
