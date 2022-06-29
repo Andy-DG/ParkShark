@@ -1,14 +1,12 @@
 package com.controlaltinsert.parkshark.division.domain;
 
-import com.controlaltinsert.parkshark.employee.Employee;
-import com.controlaltinsert.parkshark.parkinglot.domain.ParkingLot;
+import com.controlaltinsert.parkshark.employee.domain.Employee;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
@@ -37,8 +35,7 @@ public class Division {
     public Division(String name, String originalName, Employee director){
         this.name = validateName(name);
         this.originalName = validateName(originalName);
-        this.director = director;
-    }
+        this.director = director;}
 
     @Override
     public boolean equals(Object o) {

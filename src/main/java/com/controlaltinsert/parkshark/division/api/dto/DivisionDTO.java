@@ -1,10 +1,8 @@
 package com.controlaltinsert.parkshark.division.api.dto;
 
-import com.controlaltinsert.parkshark.employee.Employee;
+import com.controlaltinsert.parkshark.employee.domain.Employee;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
 @AllArgsConstructor

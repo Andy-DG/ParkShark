@@ -1,6 +1,6 @@
 package com.controlaltinsert.parkshark.parkinglot.service;
 
-import com.controlaltinsert.parkshark.employee.Employee;
+import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.CreateParkingLotDTO;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotDTO;
 import com.controlaltinsert.parkshark.parkinglot.domain.Category;
@@ -16,7 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.OngoingStubbing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -68,16 +67,15 @@ class ParkingLotServiceUnitTest {
         assertEquals(createParkingLotDTO.getCategory(), actual.getCategory());
         assertEquals(createParkingLotDTO.getPricePerHour(), actual.getPricePerHour());
         assertEquals(createParkingLotDTO.getContactPerson(), actual.getContactPerson());
-
+        
         assertEquals(id, actual.getId());
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
+    @Test
     @DisplayName("given a createParkingLotDTO with a blank name when creating a new parking lot then throw illegalArgumentException")
-    void givenACreateParkingLotDtoWithABlankNameWhenCreatingANewParkingLotThenThrowIllegalArgumentException(String badName) {
+    void givenACreateParkingLotDtoWithABlankNameWhenCreatingANewParkingLotThenThrowIllegalArgumentException() {
         CreateParkingLotDTO createParkingLotDTO = CreateParkingLotDTO.builder()
-                .name(badName)
+                .name(" ")
                 .maxCapacity(150)
                 .pricePerHour(4.20)
                 .category(Category.UNDERGROUND)

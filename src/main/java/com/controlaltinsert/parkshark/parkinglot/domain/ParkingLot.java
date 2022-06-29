@@ -1,6 +1,6 @@
 package com.controlaltinsert.parkshark.parkinglot.domain;
 
-import com.controlaltinsert.parkshark.employee.Employee;
+import com.controlaltinsert.parkshark.employee.domain.Employee;
 import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

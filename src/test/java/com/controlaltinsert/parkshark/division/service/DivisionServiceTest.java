@@ -3,7 +3,7 @@ package com.controlaltinsert.parkshark.division.service;
 import com.controlaltinsert.parkshark.division.api.dto.CreateDivisionDTO;
 import com.controlaltinsert.parkshark.division.api.dto.DivisionDTO;
 import com.controlaltinsert.parkshark.division.domain.Division;
-import com.controlaltinsert.parkshark.employee.Employee;
+import com.controlaltinsert.parkshark.employee.domain.Employee;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
