@@ -6,10 +6,12 @@ import com.controlaltinsert.parkshark.parkinglot.api.dto.CreateParkingLotDTO;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotDTO;
 import com.controlaltinsert.parkshark.parkinglot.domain.ParkingLot;
 import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
+@Setter
 public class ParkingLotMapper {
     private EmployeeMapper employeeMapper;
 

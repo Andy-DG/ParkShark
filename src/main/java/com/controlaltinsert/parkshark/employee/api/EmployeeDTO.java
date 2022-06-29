@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,4 +23,17 @@ public class EmployeeDTO {
     private String phoneNumber;
     private String mobilePhoneNumber;
     private String email;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EmployeeDTO)) return false;
+        EmployeeDTO that = (EmployeeDTO) o;
+        return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(mobilePhoneNumber, that.mobilePhoneNumber) && Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, phoneNumber, mobilePhoneNumber, email);
+    }
 }

@@ -4,10 +4,12 @@ import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.support.address.service.AddressMapper;
 import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
+@Setter
 public class EmployeeMapper {
     private AddressMapper addressMapper;
 
