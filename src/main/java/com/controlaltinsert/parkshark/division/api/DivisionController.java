@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("division")
+@RequestMapping("divisions")
 @AllArgsConstructor
 public class DivisionController {
 private DivisionService divisionService;
