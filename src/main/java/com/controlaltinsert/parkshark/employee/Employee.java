@@ -17,7 +17,16 @@ public class Employee {
     @SequenceGenerator(name = "employee_seq")
     private int id;
 
-    private String
+    private String firstName;
+    private String lastName;
+
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    private String phoneNumber;
+    private String cellPhoneNumber;
+    private String email;
 
 
 
@@ -25,8 +34,8 @@ public class Employee {
         this.id = id;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
 }
