@@ -1,5 +1,6 @@
 package com.controlaltinsert.parkshark.division.service;
 
+import com.controlaltinsert.parkshark.employee.Employee;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +12,9 @@ class DivisionServiceTest {
     void givenADivisionServiceWhenCreatingANewDivisionTheDivisionExists() {
 
         //given
+        String name = "ParkShark Ghelamco";
+        String originalName = "Parking Service Buffalo K.A.A. Gent Ghelamco";
+        Employee director = new Employee()
 
         //when
 
