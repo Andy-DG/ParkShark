@@ -7,6 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class DivisionMapper {
     public Division toDTO(DivisionDTO divisionDTO){
-        return Division.builder().id()
+        return new Division(divisionDTO.getName(), divisionDTO.getOriginalName(), divisionDTO.getDirector());
+    }
+
+    public DivisionDTO toEntity(Division division){
+        return new DivisionDTO(division.getId(),division.getName(),division.getOriginalName(),division.getDirector());
     }
 }
