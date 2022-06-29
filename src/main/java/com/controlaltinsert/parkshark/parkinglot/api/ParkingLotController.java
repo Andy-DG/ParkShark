@@ -16,7 +16,7 @@ public class ParkingLotController {
         this.parkingLotService = parkingLotService;
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/add",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ParkingLotDTO createParkingLot(@RequestBody CreateParkingLotDTO parkingLotDTO) {
         return this.parkingLotService.createParkingLot(parkingLotDTO);

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class DivisionController {
 private DivisionService divisionService;
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/add",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public DivisionDTO createDivision(@RequestBody CreateDivisionDTO divisionDTO) {
         return this.divisionService.createDivision(divisionDTO);
