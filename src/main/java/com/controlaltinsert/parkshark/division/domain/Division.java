@@ -34,6 +34,9 @@ public class Division {
     private Employee director;
 
     public Division(String name, String originalName, Employee director){
+        this.name = validateName(name);
+        this.originalName = validateName(originalName);
+        this.director = director;
     }
 
     @Override
