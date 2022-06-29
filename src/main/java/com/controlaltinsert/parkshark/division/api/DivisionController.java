@@ -1,7 +1,10 @@
 package com.controlaltinsert.parkshark.division.api;
 
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class DivisonController {
+@RequestMapping("division")
+public class DivisionController {
+
 }

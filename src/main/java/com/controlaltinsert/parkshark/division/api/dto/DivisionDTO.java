@@ -1,4 +1,4 @@
-package com.controlaltinsert.parkshark.division.api;
+package com.controlaltinsert.parkshark.division.api.dto;
 
 import com.controlaltinsert.parkshark.employee.Employee;
 import lombok.AllArgsConstructor;
