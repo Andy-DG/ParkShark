@@ -11,7 +11,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq")
     @SequenceGenerator(name = "employee_seq")
-    private Long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "address_id")

@@ -9,7 +9,7 @@ public class Division {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DIVISION_SEQUENCE")
     @SequenceGenerator(name = "DIVISION_SEQUENCE", sequenceName = "division_sequence", allocationSize = 1)
-    private Long id;
+    private int id;
 
     @Column
     private String name;

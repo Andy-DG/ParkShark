@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class DivisionDTO {
 
-    private Long id;
+    private int id;
 
     private String name;
 
