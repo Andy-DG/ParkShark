@@ -42,6 +42,8 @@ class ParkingLotServiceUnitTest {
     @Test
     @DisplayName("given a createParkingDTO with all fields filled, when adding a parking lot, then return the parkinglot")
     void givenACreateParkingDtoWithAllFieldsFilledWhenAddingAParkingLotThenReturnTheParkinglot() {
+        this.parkingLotService = Mockito.mock(ParkingLotService.class);
+
         CreateParkingLotDTO createParkingLotDTO = CreateParkingLotDTO.builder()
                 .name("TestParking")
                 .maxCapacity(150)
@@ -53,13 +55,11 @@ class ParkingLotServiceUnitTest {
         ParkingLot returnedParkingLot = this.parkingLotMapper.toEntity(createParkingLotDTO);
         ParkingLotDTO lotDTO = this.parkingLotMapper.toDTO(returnedParkingLot);
         lotDTO.setId(id);
-        System.out.println("1 " + lotDTO.getId());
 
         Mockito.when(this.parkingLotService.createParkingLot(createParkingLotDTO)).thenReturn(lotDTO);
 
         //actual test
         ParkingLotDTO actual = this.parkingLotService.createParkingLot(createParkingLotDTO);
-        System.out.println("2 " + actual.getId());
 
         assertEquals(createParkingLotDTO.getName(), actual.getName());
         assertEquals(createParkingLotDTO.getMaxCapacity(), actual.getMaxCapacity());

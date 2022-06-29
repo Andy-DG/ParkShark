@@ -34,3 +34,7 @@ private int stock;
 
 # Kanban
 https://trello.com/b/Jpy076m6/parkshark
+
+
+MOCKING:
+-> Only use mock in testmethods when it's required to mock a something, otherwise it breaks everything. 
