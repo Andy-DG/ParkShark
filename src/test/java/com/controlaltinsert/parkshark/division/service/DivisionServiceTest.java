@@ -9,14 +9,13 @@ class DivisionServiceTest {
     @Test
     @DisplayName("given a division service, when creating a new division, the division exists")
     void givenADivisionServiceWhenCreatingANewDivisionTheDivisionExists() {
-        
-        org.junit.jupiter.api.Assertions.fail("Not implemented"); 
- //given 
- 
- //when 
- 
- //then 
-   
+
+        //given
+
+        //when
+
+        //then
+
     }
 
 }

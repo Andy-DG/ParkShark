@@ -11,7 +11,7 @@ public class DivisionMapper {
         return new Division(createDivisionDTO.getName(), createDivisionDTO.getOriginalName(), createDivisionDTO.getDirector());
     }
 
-    public DivisionDTO toEntity(Division division){
+    public DivisionDTO toDTO(Division division){
         return new DivisionDTO(division.getId(),division.getName(),division.getOriginalName(),division.getDirector());
     }
 
