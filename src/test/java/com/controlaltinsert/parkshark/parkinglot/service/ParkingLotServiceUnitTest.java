@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -66,15 +68,16 @@ class ParkingLotServiceUnitTest {
         assertEquals(createParkingLotDTO.getCategory(), actual.getCategory());
         assertEquals(createParkingLotDTO.getPricePerHour(), actual.getPricePerHour());
         assertEquals(createParkingLotDTO.getContactPerson(), actual.getContactPerson());
-        
+
         assertEquals(id, actual.getId());
     }
 
-    @Test
+    @ParameterizedTest
+    @NullAndEmptySource
     @DisplayName("given a createParkingLotDTO with a blank name when creating a new parking lot then throw illegalArgumentException")
-    void givenACreateParkingLotDtoWithABlankNameWhenCreatingANewParkingLotThenThrowIllegalArgumentException() {
+    void givenACreateParkingLotDtoWithABlankNameWhenCreatingANewParkingLotThenThrowIllegalArgumentException(String badName) {
         CreateParkingLotDTO createParkingLotDTO = CreateParkingLotDTO.builder()
-                .name(" ")
+                .name(badName)
                 .maxCapacity(150)
                 .pricePerHour(4.20)
                 .category(Category.UNDERGROUND)
