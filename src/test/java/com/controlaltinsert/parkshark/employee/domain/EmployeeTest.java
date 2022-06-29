@@ -3,6 +3,7 @@ package com.controlaltinsert.parkshark.employee.domain;
 import com.controlaltinsert.parkshark.support.address.domain.Address;
 import com.controlaltinsert.parkshark.support.postalcode.domain.PostalCode;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
@@ -13,9 +14,11 @@ class EmployeeTest {
     private String firstName = "Harald";
     private String lastName = "The Red";
     Address address = new Address("Stockholmstreet", 12, new PostalCode("111 22", "Stockholm"));
-    String phoneNumber = "+46 8 508 290 00";
+    String phoneNumber = "+46850829000";
     String mobilePhoneNumber = "+46812400451";
     String email = "harald.thered@stockholm.sw";
+
+    String badFormatString = "badFormat";
 
     @ParameterizedTest
     @NullAndEmptySource
@@ -54,22 +57,10 @@ class EmployeeTest {
         //when
 
         //then
-        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, address, phoneNumber, mobilePhoneNumber, email));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Employee(firstName, lastName, address, phoneNumber, mobilePhoneNumber, email),
+                "Phone-number cannot be empty");
     }
-
-    @ParameterizedTest
-    @NullAndEmptySource
-    @DisplayName("given an employee with empty or null cellphoneNumber fields , IA exception is thrown")
-    void givenAnEmployeeWithEmptyOrNullMobilephoneNumber_whenCreatingEmployee_thenIllegalArgumentExceptionIsThrown(String nullAndEmpty) {
-
-        //given
-        mobilePhoneNumber = nullAndEmpty;
-        //when
-
-        //then
-        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, address, phoneNumber, mobilePhoneNumber, email));
-    }
-    // TODO this test should fail!
 
     @ParameterizedTest
     @NullAndEmptySource
@@ -81,7 +72,47 @@ class EmployeeTest {
         //when
 
         //then
-        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, address, phoneNumber, mobilePhoneNumber, email));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Employee(firstName, lastName, address, phoneNumber, mobilePhoneNumber, email),
+                "Email cannot be empty");
+    }
+
+    @Test
+    @DisplayName("given a bad phone number format and no cellphone when creating a employee then an exception is thrown")
+    void givenABadPhoneNumberFormatAndNoCellphoneWhenCreatingAEmployeeThenAnExceptionIsThrown() {
+
+        //given
+        phoneNumber = badFormatString;
+        mobilePhoneNumber = " ";
+        //when
+
+        //then
+        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, address, phoneNumber, mobilePhoneNumber, email), "Invalid phone-number format");
+    }
+
+    @Test
+    @DisplayName("given a bad mobile phone number format and no phone number when creating a employee then an exception is thrown")
+    void givenABadMobilePhoneNumberFormatAndNoPhoneNumberWhenCreatingAEmployeeThenAnExceptionIsThrown() {
+
+        //given
+        phoneNumber = "";
+        mobilePhoneNumber = badFormatString;
+        //when
+
+        //then
+        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, address, phoneNumber, mobilePhoneNumber, email), "Invalid phone-number format");
+    }
+
+    @Test
+    @DisplayName("given a bad email format when creating a employee then an exception is thrown")
+    void givenABadEmailFormatWhenCreatingAEmployeeThenAnExceptionIsThrown() {
+
+        //given
+        email = badFormatString;
+        //when
+
+        //then
+        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, address, phoneNumber, mobilePhoneNumber, email), "Invalid email format");
     }
 
 }
