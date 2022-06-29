@@ -14,6 +14,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @ToString
+@AllArgsConstructor
 public class Division {
 
     private static final Logger divisionLogger = LoggerFactory.getLogger(Division.class.getName());
@@ -21,7 +22,7 @@ public class Division {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DIVISION_SEQUENCE")
     @SequenceGenerator(name = "DIVISION_SEQUENCE", sequenceName = "division_sequence", allocationSize = 1)
-    private final int id;
+    private int id;
 
     @Column
     private String name;

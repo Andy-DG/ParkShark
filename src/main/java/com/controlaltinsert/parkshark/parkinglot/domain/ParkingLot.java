@@ -37,19 +37,20 @@ public class ParkingLot {
     private Employee contactPerson;
 
     public ParkingLot(String name, Category category, int maxCapacity, double pricePerHour, Employee contactPerson) {
-        this.name = name;
-        this.category = category;
-        this.maxCapacity = maxCapacity;
-        this.pricePerHour = pricePerHour;
-        this.contactPerson = contactPerson;
+        this.name = validateName(name);
+        this.category = validateCategory(category);
+        this.maxCapacity = validateMaxCapacity(maxCapacity);
+        this.pricePerHour = validatePricePerHour(pricePerHour);
+        this.contactPerson = validateEmployee(contactPerson);
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setName(String name) {
+    public String setName(String name) {
         this.name = validateName(name);
+        return this.name;
     }
 
     public void setCategory(Category category) {
