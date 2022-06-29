@@ -1,5 +1,6 @@
 package com.controlaltinsert.parkshark.support.address.api;
 
+import com.controlaltinsert.parkshark.support.postalcode.api.PostalCodeDTO;
 import com.controlaltinsert.parkshark.support.postalcode.domain.PostalCode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,5 +15,5 @@ public class AddressDTO {
     private int id;
     private String streetName;
     private int streetNumber;
-    private PostalCode postalCode;
+    private PostalCodeDTO postalCodeDTO;
 }
