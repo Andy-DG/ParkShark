@@ -67,15 +67,16 @@ class ParkingLotServiceUnitTest {
         assertEquals(createParkingLotDTO.getCategory(), actual.getCategory());
         assertEquals(createParkingLotDTO.getPricePerHour(), actual.getPricePerHour());
         assertEquals(createParkingLotDTO.getContactPerson(), actual.getContactPerson());
-        
+
         assertEquals(id, actual.getId());
     }
 
-    @Test
+    @ParameterizedTest
+    @NullAndEmptySource
     @DisplayName("given a createParkingLotDTO with a blank name when creating a new parking lot then throw illegalArgumentException")
-    void givenACreateParkingLotDtoWithABlankNameWhenCreatingANewParkingLotThenThrowIllegalArgumentException() {
+    void givenACreateParkingLotDtoWithABlankNameWhenCreatingANewParkingLotThenThrowIllegalArgumentException(String nullAndEmpty) {
         CreateParkingLotDTO createParkingLotDTO = CreateParkingLotDTO.builder()
-                .name(" ")
+                .name(nullAndEmpty)
                 .maxCapacity(150)
                 .pricePerHour(4.20)
                 .category(Category.UNDERGROUND)
