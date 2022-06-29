@@ -55,8 +55,8 @@ public class Employee {
         this.firstName = validateFirstName(firstName);
         this.lastName = validateLastName(lastName);
         this.address = validateAddress(address);
-        this.phoneNumber = validatePhoneNumber(phoneNumber);
-        this.mobilePhoneNumber = validatePhoneNumber(mobilePhoneNumber);
+        this.phoneNumber = phoneNumber;
+        this.mobilePhoneNumber = mobilePhoneNumber;
         this.email = validateEmail(email);
         employeeLogger.info("Created an employee successfully");
     }
@@ -84,11 +84,17 @@ public class Employee {
             String errorMessage = "You need either a phone-number or a mobile phone-number";
             employeeLogger.error(errorMessage);
             throw new IllegalArgumentException(errorMessage);
+        } else {
+            if (!isNullOrBlank(phoneNumber)) {
+                validatePhoneNumber(phoneNumber);
+            } else {
+                validatePhoneNumber(mobilePhoneNumber);
+            }
         }
     }
 
     private String validatePhoneNumber(String phoneNumber) {
-        if (phoneNumber == null) {
+        if (isNullOrBlank(phoneNumber)) {
             String errorMessage = "Phone-number cannot be empty";
             employeeLogger.error(errorMessage);
             throw new IllegalArgumentException(errorMessage);
@@ -103,8 +109,8 @@ public class Employee {
         return phoneNumber;
     }
 
-    private String validateFirstName(String firstName){
-        if(firstName == null || firstName.isBlank()){
+    private String validateFirstName(String firstName) {
+        if (isNullOrBlank(firstName)) {
             String message = "First name cannot be null";
             employeeLogger.error(message);
             throw new IllegalArgumentException(message);
@@ -112,8 +118,12 @@ public class Employee {
         return firstName;
     }
 
-    private String validateLastName(String lastName){
-        if(lastName == null || lastName.isBlank()){
+    private boolean isNullOrBlank(String string) {
+        return string == null || string.isBlank();
+    }
+
+    private String validateLastName(String lastName) {
+        if (isNullOrBlank(lastName)) {
             String message = "Last name cannot be null";
             employeeLogger.error(message);
             throw new IllegalArgumentException(message);
@@ -121,8 +131,8 @@ public class Employee {
         return lastName;
     }
 
-    private Address validateAddress(Address address){
-        if(address == null){
+    private Address validateAddress(Address address) {
+        if (address == null) {
             String message = "Address cannot be null";
             employeeLogger.error(message);
             throw new IllegalArgumentException(message);
