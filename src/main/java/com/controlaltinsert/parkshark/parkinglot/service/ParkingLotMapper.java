@@ -1,5 +1,6 @@
 package com.controlaltinsert.parkshark.parkinglot.service;
 
+import com.controlaltinsert.parkshark.division.domain.Division;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.employee.service.EmployeeMapper;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.CreateParkingLotDTO;
@@ -16,17 +17,13 @@ public class ParkingLotMapper {
     private EmployeeMapper employeeMapper;
 
 
-    public ParkingLot toEntity(CreateParkingLotDTO createParkingLotDTO) {
-
-
-        ParkingLot parkingLot = new ParkingLot();
-        parkingLot.setName(createParkingLotDTO.getName());
-        parkingLot.setCategory(createParkingLotDTO.getCategory());
-        parkingLot.setContactPerson(employeeMapper.toEntity(createParkingLotDTO.getContactPerson()));
-        parkingLot.setMaxCapacity(createParkingLotDTO.getMaxCapacity());
-        parkingLot.setPricePerHour(createParkingLotDTO.getPricePerHour());
-
-        return parkingLot;
+    public ParkingLot toEntity(CreateParkingLotDTO createParkingLotDTO, Employee contactPerson) {
+        return new ParkingLot(
+                createParkingLotDTO.getName()
+                , createParkingLotDTO.getCategory()
+                , createParkingLotDTO.getMaxCapacity()
+                , createParkingLotDTO.getPricePerHour()
+                , contactPerson);
     }
 
     public ParkingLotDTO toDTO(ParkingLot parkingLot) {

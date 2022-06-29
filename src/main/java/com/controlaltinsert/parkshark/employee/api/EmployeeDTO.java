@@ -12,7 +12,6 @@ import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
 @Getter
 public class EmployeeDTO {

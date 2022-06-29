@@ -1,5 +1,5 @@
-package com.controlaltinsert.parkshark.security;
-
-public enum Feature {
-    ADMIN;
-}
+//package com.controlaltinsert.parkshark.security;
+//
+//public enum Feature {
+//    ADMIN;
+//}
