@@ -24,9 +24,9 @@ public class EmployeeMapper {
                 employee.getFirstName(),
                 employee.getLastName(),
                 addressMapper.toDTO(employee.getAddress()),
-                employee.getEmail(),
                 employee.getMobilePhoneNumber(),
-                employee.getPhoneNumber());
+                employee.getPhoneNumber(),
+                employee.getEmail());
     }
 
 }

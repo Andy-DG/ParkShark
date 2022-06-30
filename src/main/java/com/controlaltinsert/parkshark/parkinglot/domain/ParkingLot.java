@@ -1,5 +1,6 @@
 package com.controlaltinsert.parkshark.parkinglot.domain;
 
+import com.controlaltinsert.parkshark.division.domain.Division;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import lombok.*;
 import org.slf4j.Logger;
@@ -22,7 +23,7 @@ public class ParkingLot {
     @Column(name = "name")
     private String name;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "fk_category_id")
     private Category category;
 
@@ -35,6 +36,7 @@ public class ParkingLot {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_contact_id")
     private Employee contactPerson;
+
 
     public ParkingLot(String name, Category category, int maxCapacity, double pricePerHour, Employee contactPerson) {
         this.name = validateName(name);

@@ -13,6 +13,7 @@ public class ParkingLotDTO {
 
     private int id;
     private String name;
+
     private Category category;
     private int maxCapacity;
     private double pricePerHour;
@@ -65,4 +66,5 @@ public class ParkingLotDTO {
     public void setContactPerson(EmployeeDTO contactPerson) {
         this.contactPerson = contactPerson;
     }
+
 }

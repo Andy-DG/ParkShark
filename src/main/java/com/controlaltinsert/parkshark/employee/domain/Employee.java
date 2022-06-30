@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Entity
-@Table(name = "employee")
+@Table(name = "EMPLOYEE", schema = "parkshark")
 @NoArgsConstructor
 @Getter
 public class Employee {

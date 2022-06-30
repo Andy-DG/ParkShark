@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Getter
 @ToString
 @AllArgsConstructor
+@Table(name = "DIVISION")
 public class Division {
     @Transient
     private static final Logger divisionLogger = LoggerFactory.getLogger(Division.class.getName());
@@ -22,10 +23,10 @@ public class Division {
     @SequenceGenerator(name = "DIVISION_SEQUENCE", sequenceName = "DIVISION_id_seq", allocationSize = 1)
     private int id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
-    @Column
+    @Column(name = "original_name")
     private String originalName;
 
     @ManyToOne(cascade = CascadeType.ALL)
