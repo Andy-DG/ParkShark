@@ -1,6 +1,5 @@
 package com.controlaltinsert.parkshark.support.licenseplate.service;
 
-import com.controlaltinsert.parkshark.member.api.CreateMemberDTO;
 import com.controlaltinsert.parkshark.support.licenseplate.api.CreateLicensePlateDTO;
 import com.controlaltinsert.parkshark.support.licenseplate.api.LicensePlateDTO;
 import com.controlaltinsert.parkshark.support.licenseplate.domain.LicensePlate;

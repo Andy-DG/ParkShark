@@ -1,6 +1,7 @@
 package com.controlaltinsert.parkshark.division.domain;
 
 import com.controlaltinsert.parkshark.employee.domain.Employee;
+import com.controlaltinsert.parkshark.util.Validate;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
@@ -46,8 +47,8 @@ public class Division {
 
 
     public Division(String name, String originalName, Employee director) {
-        this.name = validateName(name);
-        this.originalName = validateName(originalName);
+        this.name = Validate.validateString(name, "Division-name");
+        this.originalName = Validate.validateString(originalName, "Original division-name");
         this.director = director;
         this.headDivisionId = 0;
     }
@@ -73,15 +74,5 @@ public class Division {
     public int hashCode() {
         return getClass().hashCode();
     }
-
-    private String validateName(String name){
-        if(name == null || name.isBlank()){
-            String message = "Name cannot be null";
-            divisionLogger.error(message);
-            throw new IllegalArgumentException(message);
-        }
-        return name;
-    }
-
 
 }

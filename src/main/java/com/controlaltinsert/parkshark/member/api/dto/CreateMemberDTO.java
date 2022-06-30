@@ -1,4 +1,4 @@
-package com.controlaltinsert.parkshark.member.api;
+package com.controlaltinsert.parkshark.member.api.dto;
 
 import com.controlaltinsert.parkshark.support.address.api.AddressDTO;
 import com.controlaltinsert.parkshark.support.licenseplate.api.CreateLicensePlateDTO;

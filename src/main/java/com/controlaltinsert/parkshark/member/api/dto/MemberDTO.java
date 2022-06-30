@@ -1,4 +1,4 @@
-package com.controlaltinsert.parkshark.member.api;
+package com.controlaltinsert.parkshark.member.api.dto;
 
 import com.controlaltinsert.parkshark.support.licenseplate.domain.LicensePlate;
 import lombok.*;

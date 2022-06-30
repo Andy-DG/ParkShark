@@ -2,6 +2,7 @@ package com.controlaltinsert.parkshark.parkinglot.domain;
 
 import com.controlaltinsert.parkshark.division.domain.Division;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
+import com.controlaltinsert.parkshark.util.Validate;
 import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,7 @@ public class ParkingLot {
 
 
     public ParkingLot(String name, Category category, int maxCapacity, double pricePerHour, Employee contactPerson, Division division) {
-        this.name = validateName(name);
+        this.name = Validate.validateString(name, "Parking-lot name");
         this.category = validateCategory(category);
         this.maxCapacity = validateMaxCapacity(maxCapacity);
         this.pricePerHour = validatePricePerHour(pricePerHour);
@@ -65,7 +66,7 @@ public class ParkingLot {
     }
 
     public String setName(String name) {
-        this.name = validateName(name);
+        this.name = Validate.validateString(name, "Parking-lot name");
         return this.name;
     }
 
@@ -110,16 +111,6 @@ public class ParkingLot {
             throw new IllegalArgumentException(message);
         }
         return contactPerson;
-    }
-
-
-    private String validateName(String name){
-        if(name == null || name.isBlank()){
-            String message = "Name cannot be null";
-            parkingLotLogger.error(message);
-            throw new IllegalArgumentException(message);
-        }
-        return name;
     }
 
     private Category validateCategory(Category category){

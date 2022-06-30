@@ -1,7 +1,7 @@
-package com.controlaltinsert.parkshark.member;
+package com.controlaltinsert.parkshark.member.service;
 
-import com.controlaltinsert.parkshark.member.api.CreateMemberDTO;
-import com.controlaltinsert.parkshark.member.api.MemberDTO;
+import com.controlaltinsert.parkshark.member.api.dto.CreateMemberDTO;
+import com.controlaltinsert.parkshark.member.api.dto.MemberDTO;
 import com.controlaltinsert.parkshark.member.domain.Member;
 import com.controlaltinsert.parkshark.support.address.domain.Address;
 import com.controlaltinsert.parkshark.support.address.service.AddressMapper;

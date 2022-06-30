@@ -3,12 +3,17 @@ package com.controlaltinsert.parkshark.member.domain;
 import com.controlaltinsert.parkshark.support.address.domain.Address;
 import com.controlaltinsert.parkshark.support.licenseplate.api.LicensePlateDTO;
 import com.controlaltinsert.parkshark.support.licenseplate.domain.LicensePlate;
+import com.controlaltinsert.parkshark.util.Validate;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Cascade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+
+import static com.controlaltinsert.parkshark.util.Validate.*;
 
 @Entity
 @Table(name = "member", schema = "parkshark")
@@ -17,6 +22,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 public class Member {
+    static Logger memberLogger = LoggerFactory.getLogger(Member.class);
 
     @Id
     @SequenceGenerator(name = "member_id_seq", sequenceName = "member_id_seq", allocationSize = 1)
@@ -50,14 +56,23 @@ public class Member {
     LicensePlate licensePlate;
 
     public Member(String firstName, String lastName, String mobile, String phone, String email, Address fk_address_id, LocalDate registrationDate, LicensePlate licensePlate) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.mobile = mobile;
-        this.phone = phone;
-        this.email = email;
-        this.address = fk_address_id;
+        this.firstName = validateString(firstName, "Firstname");
+        this.lastName = validateString(lastName, "Lastname");
+        this.mobile = validatePhoneNumberFormat(mobile);
+        this.phone = validatePhoneNumberFormat(phone);
+        this.email = validateEmail(email);
+        this.address = validateAddress(fk_address_id);
         this.registrationDate = registrationDate;
-        this.licensePlate = licensePlate;
+        this.licensePlate = validateLicensePlate(licensePlate);
+    }
+
+    private LicensePlate validateLicensePlate(LicensePlate licensePlate) {
+        if (licensePlate == null) {
+            String errorMessage = "License plate can't be null";
+            memberLogger.error(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
+        }
+        return licensePlate;
     }
 }
 

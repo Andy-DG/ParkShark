@@ -1,7 +1,8 @@
-package com.controlaltinsert.parkshark.member;
+package com.controlaltinsert.parkshark.member.api;
 
-import com.controlaltinsert.parkshark.member.api.CreateMemberDTO;
-import com.controlaltinsert.parkshark.member.api.MemberDTO;
+import com.controlaltinsert.parkshark.member.service.MemberService;
+import com.controlaltinsert.parkshark.member.api.dto.CreateMemberDTO;
+import com.controlaltinsert.parkshark.member.api.dto.MemberDTO;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
