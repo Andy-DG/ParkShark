@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
 public class DivisionMapper {
     private EmployeeMapper employeeMapper;
 
-    public Division toEntity(CreateDivisionDTO createDivisionDTO, Employee director, Division headDivision){
-        return new Division(createDivisionDTO.getName(), createDivisionDTO.getOriginalName(), director, headDivision);
+    public Division toEntity(CreateDivisionDTO createDivisionDTO, Employee director) {
+        return new Division(createDivisionDTO.getName(), createDivisionDTO.getOriginalName(), director, createDivisionDTO.getHeadDivisionId());
     }
 
-    public DivisionDTO toSubDivisionDTO(Division division){
-        return new DivisionDTO(division.getId(),division.getName(),division.getOriginalName(),employeeMapper.toDTO(division.getDirector()),toDTO(division.getHeadDivision()));
+    public DivisionDTO toDTO(Division division) {
+        return new DivisionDTO(division.getId(), division.getName(), division.getOriginalName(), employeeMapper.toDTO(division.getDirector()), division.getHeadDivisionId());
     }
 
 

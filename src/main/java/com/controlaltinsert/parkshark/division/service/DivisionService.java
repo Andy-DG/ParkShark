@@ -25,15 +25,24 @@ public class DivisionService {
 
 
     public DivisionDTO createDivision(CreateDivisionDTO divisionDTO) {
+        int headDivisionId = divisionDTO.getHeadDivisionId();
+
+        Division headDivisionById = divisionRepository.findById(headDivisionId).orElse(null);
+        if(headDivisionById == null){
+            String message = "This head division doesn't exist. Creating normal division instead";
+            divisionLogger.error(message);
+            throw new IllegalArgumentException(message);
+        }
         Division division = divisionRepository.save(getEntity(divisionDTO));
         return getDTO(division);
     }
 
 
+
+
     private Division getEntity(CreateDivisionDTO createDivisionDTO) {
         Employee director = employeeService.getEmployeeById(createDivisionDTO.getDirectorId());
-        Division headDivision = divisionRepository.findById(createDivisionDTO.getHeadDivisionId()).orElse(null);
-        return divisionMapper.toEntity(createDivisionDTO, director, headDivision);
+        return divisionMapper.toEntity(createDivisionDTO, director);
     }
 
     private DivisionDTO getDTO(Division division) {

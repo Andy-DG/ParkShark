@@ -67,7 +67,7 @@ class DivisionServiceTest {
         EmployeeDTO directorDTO = employeeMapper.toDTO(director);
         CreateDivisionDTO expectedDTO = new CreateDivisionDTO(name, originalName, directorDTO.getId(), 0);
 
-        Division expected = divisionMapper.toEntity(expectedDTO,director,headDivision);
+        Division expected = divisionMapper.toEntity(expectedDTO,director);
 
         DivisionDTO divisionDTO = divisionMapper.toDTO(expected);
         divisionDTO.setId(id);

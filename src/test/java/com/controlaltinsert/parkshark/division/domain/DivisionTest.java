@@ -11,10 +11,10 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DivisionTest {
-    private int id = 666;
-    private String name = "ParkShark Hasselt";
-    private String originalName = "Parking Hasselt Station";
-    private Employee director = new Employee("Boris", "De Beer",
+    private final  int id = 666;
+    private final String name = "ParkShark Hasselt";
+    private final String originalName = "Parking Hasselt Station";
+    private final Employee director = new Employee("Boris", "De Beer",
             new Address("Nieuwstraat", 1, new PostalCode("1000", "Brussel")),
             "", "+32123456789", "boris.debeer@parkshark.be");
 
@@ -24,7 +24,7 @@ class DivisionTest {
     void givenANullOrBlankNamewithOKOriginalNameAndDrcetorWhenCreatingADirectorThenThrowException(String nullAndEmpty) {
 
                //then
-        assertThrows(IllegalArgumentException.class, () -> new Division(nullAndEmpty, originalName, director,null));
+        assertThrows(IllegalArgumentException.class, () -> new Division(nullAndEmpty, originalName, director,0));
     }
 
 }

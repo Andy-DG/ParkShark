@@ -4,7 +4,6 @@ import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 
 @AllArgsConstructor
@@ -20,7 +19,7 @@ public class DivisionDTO {
 
     private  EmployeeDTO director;
 
-    private DivisionDTO headDivision;
+    private int headDivisionId;
 
     public int getDirectorId() {
         return director.getId();

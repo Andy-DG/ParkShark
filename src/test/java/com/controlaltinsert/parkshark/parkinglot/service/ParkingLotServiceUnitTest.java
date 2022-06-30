@@ -44,7 +44,7 @@ class ParkingLotServiceUnitTest {
     private Employee director = new Employee("Boris", "De Beer",
             new Address("Nieuwstraat", 1, new PostalCode("1000", "Brussel")),
             "", "+32123456789", "boris.debeer@parkshark.be");
-    private Division division = new Division(name, originalName, director,null);
+    private Division division = new Division(name, originalName, director,0);
 
     private PostalCodeMapper postalCodeMapper;
     private AddressMapper addressMapper;
