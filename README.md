@@ -38,3 +38,6 @@ https://trello.com/b/Jpy076m6/parkshark
 
 MOCKING:
 -> Only use mock in testmethods when it's required to mock a something, otherwise it breaks everything. 
+
+# READMECEPTION
+https://github.com/switchfully/track-shared/tree/master/60-projects/20-parkshark
