@@ -26,18 +26,28 @@ public class DivisionService {
 
     public DivisionDTO createDivision(CreateDivisionDTO divisionDTO) {
         int headDivisionId = divisionDTO.getHeadDivisionId();
-
         Division headDivisionById = divisionRepository.findById(headDivisionId).orElse(null);
-        if(headDivisionById == null){
-            String message = "This head division doesn't exist. Creating normal division instead";
-            divisionLogger.error(message);
-            throw new IllegalArgumentException(message);
-        }
+        isNotNull(headDivisionById);
+        validateSubDivision(headDivisionById);
         Division division = divisionRepository.save(getEntity(divisionDTO));
         return getDTO(division);
     }
 
+    private void validateSubDivision(Division headDivisionById) {
+        if (headDivisionById.getHeadDivisionId() != 0) {
+            String errorMessage = "Target head division is a subdivision";
+            divisionLogger.error(errorMessage);
+            throw new IllegalStateException(errorMessage);
+        }
+    }
 
+    private void isNotNull(Division headDivisionById) {
+        if (headDivisionById == null) {
+            String message = "This head division doesn't exist. Creating normal division instead";
+            divisionLogger.error(message);
+            throw new IllegalArgumentException(message);
+        }
+    }
 
 
     private Division getEntity(CreateDivisionDTO createDivisionDTO) {
@@ -61,5 +71,12 @@ public class DivisionService {
             divisionLogger.error(errorMessage);
             throw new IllegalArgumentException(errorMessage);
         }
+    }
+
+    private int validateHeadDivisionId(int headDivisionId) {
+        if (headDivisionId != 0) {
+            throw new IllegalStateException("Target head division is a subdivision");
+        }
+        return headDivisionId;
     }
 }

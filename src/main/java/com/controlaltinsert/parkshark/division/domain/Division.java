@@ -36,8 +36,8 @@ public class Division {
     @JoinColumn(name = "fk_head_division_id")
     private Integer headDivisionId;
 
-    public void setHeadDivision(int headDivisionId) {
-        this.headDivisionId = headDivisionId;
+    public Integer getHeadDivisionId() {
+        return headDivisionId;
     }
 
     public void setDirector(Employee director) {
@@ -54,7 +54,7 @@ public class Division {
 
     public Division(String name, String originalName, Employee director, int headDivisionId){
         this(name,originalName,director);
-        this.headDivisionId = validateHeadDivisionId(headDivisionId);
+        this.headDivisionId = headDivisionId;
     }
 
 
@@ -83,10 +83,5 @@ public class Division {
         return name;
     }
 
-    private int validateHeadDivisionId(int headDivisionId){
-        if(headDivisionId != 0){
-            throw new IllegalStateException("Target head division is a subdivision");
-        }
-        return headDivisionId;
-    }
+
 }
