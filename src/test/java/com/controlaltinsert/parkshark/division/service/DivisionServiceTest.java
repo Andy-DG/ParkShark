@@ -4,6 +4,7 @@ import com.controlaltinsert.parkshark.division.api.dto.CreateDivisionDTO;
 import com.controlaltinsert.parkshark.division.api.dto.DivisionDTO;
 import com.controlaltinsert.parkshark.division.domain.Division;
 import com.controlaltinsert.parkshark.division.domain.DivisionRepository;
+import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.employee.domain.EmployeeRepository;
 import com.controlaltinsert.parkshark.employee.service.EmployeeMapper;
@@ -24,10 +25,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DivisionServiceTest {
     private int id = 1;
+    private final int HOOFDZETEL_PARK_SHARK = 0;
     private String name = "ParkShark Ghelamco";
     private String originalName = "Parking Service Buffalo K.A.A. Gent Ghelamco";
     private Address address = new Address("Hoheloon", 7, new PostalCode("B4400", "Zulu"));
     private Employee director = new Employee("Rick", "Sanchez", address, "+3214804060", "+32479252939", "man@domain.com");
+
+
+    Division headDivision;
+    DivisionDTO headDivisionDTO;
 
     private PostalCodeMapper postalCodeMapper;
     private AddressMapper addressMapper;
@@ -48,6 +54,8 @@ class DivisionServiceTest {
         divisionMapper = new DivisionMapper(employeeMapper);
         divisionRepository = Mockito.mock(DivisionRepository.class);
         divisionService = new DivisionService(divisionRepository, divisionMapper, employeeService);
+        headDivision = Mockito.mock(Division.class);
+        headDivisionDTO = Mockito.mock(DivisionDTO.class);
     }
 
     @Test
@@ -56,23 +64,24 @@ class DivisionServiceTest {
 
         //given
         divisionService = Mockito.mock(DivisionService.class);
+        EmployeeDTO directorDTO = employeeMapper.toDTO(director);
+        CreateDivisionDTO expectedDTO = new CreateDivisionDTO(name, originalName, directorDTO.getId(), 0);
 
-        CreateDivisionDTO expected = new CreateDivisionDTO(name, originalName, director.getId());
+        Division expected = divisionMapper.toEntity(expectedDTO,director,headDivision);
 
-        Division returnedDivision = divisionMapper.toEntity(expected,director);
-        DivisionDTO divisionDTO = divisionMapper.toDTO(returnedDivision);
+        DivisionDTO divisionDTO = divisionMapper.toDTO(expected);
         divisionDTO.setId(id);
 
-        Mockito.when(divisionService.createDivision(expected)).thenReturn(divisionDTO);
+        Mockito.when(divisionService.createDivision(expectedDTO)).thenReturn(divisionDTO);
 
         //when
-        DivisionDTO actual = divisionService.createDivision(expected);
+        DivisionDTO actual = divisionService.createDivision(expectedDTO);
 
 
         //then
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getOriginalName(), actual.getOriginalName());
-        assertEquals(expected.getDirectorId(), actual.getDirectorId());
+        assertEquals(expected.getDirector().getId(), actual.getDirectorId());
         assertEquals(id, actual.getId());
     }
 

@@ -16,4 +16,10 @@ public class CreateDivisionDTO {
 
     private int headDivisionId;
 
+    public CreateDivisionDTO(String name, String originalName, int directorId) {
+        this.name = name;
+        this.originalName = originalName;
+        this.directorId = directorId;
+        this.headDivisionId = 0;
+    }
 }

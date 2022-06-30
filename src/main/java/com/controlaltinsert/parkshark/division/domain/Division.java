@@ -45,15 +45,14 @@ public class Division {
         this.director = director;
     }
 
-    public Division(String name, String originalName, Employee director){
-        this.name = validateName(name);
-        this.originalName = validateName(originalName);
-        this.director = director;}
 
     public Division(String name, String originalName, Employee director, Division headDivision) {
-        this(name, originalName, director);
+        this.name = validateName(name);
+        this.originalName = validateName(originalName);
+        this.director = director;
         this.headDivision = validateHeadDivision(headDivision);
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -80,7 +79,7 @@ public class Division {
     }
 
     private Division validateHeadDivision(Division headDivision){
-        if(headDivision.getHeadDivision().getId() != 0){
+        if(headDivision.getHeadDivision() != null || headDivision.getHeadDivision().getId() != 0){
             throw new IllegalStateException("Target head division is a subdivision");
         }
         return headDivision;

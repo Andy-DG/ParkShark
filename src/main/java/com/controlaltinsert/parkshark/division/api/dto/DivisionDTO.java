@@ -3,21 +3,27 @@ package com.controlaltinsert.parkshark.division.api.dto;
 import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Data
 public class DivisionDTO {
 
-    private final int id;
+    private  int id;
 
-    private final String name;
+    private  String name;
 
-    private final String originalName;
+    private  String originalName;
 
-    private final EmployeeDTO director;
+    private  EmployeeDTO director;
 
     private DivisionDTO headDivision;
+
+    public int getDirectorId() {
+        return director.getId();
+    }
+
 }

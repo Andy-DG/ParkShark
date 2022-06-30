@@ -1,5 +1,9 @@
 package com.controlaltinsert.parkshark.parkinglot.service;
 
+import com.controlaltinsert.parkshark.division.domain.Division;
+import com.controlaltinsert.parkshark.division.domain.DivisionRepository;
+import com.controlaltinsert.parkshark.division.service.DivisionMapper;
+import com.controlaltinsert.parkshark.division.service.DivisionService;
 import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.employee.domain.EmployeeRepository;
@@ -35,13 +39,26 @@ class ParkingLotServiceUnitTest {
     private Employee contactperson = new Employee("Andy", "Builder",
             new Address("Haaistraat", 6, new PostalCode("8000", "Bruhhe")),
             "+32123456789", "", "andy@parkshark.be");
+    private String name = "ParkShark Hasselt";
+    private String originalName = "Parking Hasselt Station";
+    private Employee director = new Employee("Boris", "De Beer",
+            new Address("Nieuwstraat", 1, new PostalCode("1000", "Brussel")),
+            "", "+32123456789", "boris.debeer@parkshark.be");
+    private Division division = new Division(name, originalName, director,null);
+
+    private PostalCodeMapper postalCodeMapper;
+    private AddressMapper addressMapper;
 
     private ParkingLotMapper parkingLotMapper;
     private EmployeeMapper employeeMapper;
     private EmployeeRepository employeeRepository;
     private EmployeeService employeeService;
-    private PostalCodeMapper postalCodeMapper;
-    private AddressMapper addressMapper;
+
+    private DivisionMapper divisionMapper;
+    private DivisionRepository divisionRepository;
+    private DivisionService divisionService;
+
+
     private ParkingLotRepository parkingLotRepository;
     private ParkingLotService parkingLotService;
     private EmployeeDTO employeeDTO;
@@ -51,16 +68,24 @@ class ParkingLotServiceUnitTest {
     void setUp() {
         postalCodeMapper = new PostalCodeMapper();
         addressMapper = new AddressMapper(postalCodeMapper);
+
         employeeMapper = new EmployeeMapper(addressMapper);
         employeeRepository = Mockito.mock(EmployeeRepository.class);
         employeeService = new EmployeeService(employeeRepository);
-        parkingLotMapper = new ParkingLotMapper(employeeMapper);
+
+        divisionMapper = new DivisionMapper(employeeMapper);
+        divisionRepository = Mockito.mock(DivisionRepository.class);
+        divisionService = new DivisionService(divisionRepository,divisionMapper,employeeService);
+
+        parkingLotMapper = new ParkingLotMapper(employeeMapper,divisionMapper);
         parkingLotRepository = Mockito.mock(ParkingLotRepository.class);
-        parkingLotService = new ParkingLotService(parkingLotMapper, parkingLotRepository, employeeService);
+        parkingLotService = new ParkingLotService(parkingLotMapper, parkingLotRepository, employeeService, divisionService);
 
         PostalCodeDTO postalCodeDTO = new PostalCodeDTO(1000, "E1000", "Edingburg");
         AddressDTO addressDTO = new AddressDTO(40, "RockLane", 15, postalCodeDTO);
-        employeeDTO = new EmployeeDTO(15, "Hugh", "Mungus", addressDTO, "+3214778090", "+40478889945", "hugh@mungus.be");
+        employeeDTO = new EmployeeDTO(15, "Hugh", "Mungus",
+                addressDTO,
+                "+3214778090", "+40478889945", "hugh@mungus.be");
     }
 
     @Test
@@ -74,7 +99,7 @@ class ParkingLotServiceUnitTest {
                 .contactPersonId(contactperson.getId())
                 .build();
 
-        ParkingLot returnedParkingLot = this.parkingLotMapper.toEntity(createParkingLotDTO, contactperson);
+        ParkingLot returnedParkingLot = this.parkingLotMapper.toEntity(createParkingLotDTO, contactperson, division);
         ParkingLotDTO lotDTO = this.parkingLotMapper.toDTO(returnedParkingLot);
         lotDTO.setId(id);
 

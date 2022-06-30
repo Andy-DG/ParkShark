@@ -18,7 +18,7 @@ private DivisionService divisionService;
     @ResponseStatus(HttpStatus.CREATED)
     public DivisionDTO createDivision(@RequestBody CreateDivisionDTO divisionDTO) {
         if(divisionDTO.getHeadDivisionId() != 0){
-            return this.divisionService.createSubDivision(divisionDTO);
+            return this.divisionService.createDivision(divisionDTO);
         }
         System.out.println(divisionDTO.getHeadDivisionId());
         return this.divisionService.createDivision(divisionDTO);
