@@ -6,10 +6,13 @@ import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.employee.service.EmployeeMapper;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.CreateParkingLotDTO;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotDTO;
+import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotListDTO;
 import com.controlaltinsert.parkshark.parkinglot.domain.ParkingLot;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @AllArgsConstructor
@@ -38,5 +41,20 @@ public class ParkingLotMapper {
                 parkingLot.getPricePerHour(),
                 employeeMapper.toDTO(parkingLot.getContactPerson()),
                 divisionMapper.toDTO(parkingLot.getDivision()));
+    }
+
+    public List<ParkingLotListDTO> toDTO(List<ParkingLot> parkingLots) {
+        return parkingLots.stream().map(this::toDTOForList).toList();
+    }
+
+    public ParkingLotListDTO toDTOForList(ParkingLot parkingLot) {
+        return new ParkingLotListDTO(
+                parkingLot.getId(),
+                parkingLot.getName(),
+                parkingLot.getCategory(),
+                parkingLot.getMaxCapacity(),
+                parkingLot.getPricePerHour(),
+                parkingLot.getContactPerson().getId(),
+                parkingLot.getDivision().getId());
     }
 }

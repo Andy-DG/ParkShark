@@ -6,6 +6,7 @@ import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.employee.service.EmployeeService;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.CreateParkingLotDTO;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotDTO;
+import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotListDTO;
 import com.controlaltinsert.parkshark.parkinglot.domain.ParkingLot;
 import com.controlaltinsert.parkshark.parkinglot.domain.ParkingLotRepository;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -56,5 +58,10 @@ public class ParkingLotService {
             parkingLotLogger.error(errorMessage);
             throw new IllegalArgumentException(errorMessage);
         }
+    }
+
+    public List<ParkingLotListDTO> viewAllParkingLots() {
+        List<ParkingLot> parkingLots = parkingLotRepository.findAll();
+        return parkingLotMapper.toDTO(parkingLots);
     }
 }
