@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @ToString
 @AllArgsConstructor
-@Table(name = "DIVISION")
+@Table(name = "DIVISION", schema = "parkshark")
 public class Division {
     @Transient
     private static final Logger divisionLogger = LoggerFactory.getLogger(Division.class.getName());

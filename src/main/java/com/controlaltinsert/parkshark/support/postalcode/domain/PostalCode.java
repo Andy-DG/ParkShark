@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Getter
-@Table(name = "POSTAL_CODE")
+@Table(name = "POSTAL_CODE", schema = "parkshark")
 public class PostalCode {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "POSTAL_CODE_GENERATOR")

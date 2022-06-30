@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "address")
+@Table(name = "address", schema = "parkshark")
 @NoArgsConstructor
 @Getter
 public class Address {
