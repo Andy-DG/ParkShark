@@ -17,6 +17,10 @@ private DivisionService divisionService;
     @PostMapping(path = "/add",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public DivisionDTO createDivision(@RequestBody CreateDivisionDTO divisionDTO) {
+        if(divisionDTO.getHeadDivisionId() != 0){
+            return this.divisionService.createSubDivision(divisionDTO);
+        }
+        System.out.println(divisionDTO.getHeadDivisionId());
         return this.divisionService.createDivision(divisionDTO);
     }
 }

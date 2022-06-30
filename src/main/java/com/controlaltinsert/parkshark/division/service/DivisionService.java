@@ -25,15 +25,26 @@ public class DivisionService {
 
 
     public DivisionDTO createDivision(CreateDivisionDTO divisionDTO) {
-        Division division = divisionRepository.save(getEntity(divisionDTO));
+        Division division = divisionRepository.save(getDivisionFromDTO(divisionDTO));
         return getDTO(division);
+    }
+
+    public DivisionDTO createSubDivision(CreateDivisionDTO subDivisionDTO) {
+        Division division = divisionRepository.save(getSubDivisionFromDTO(subDivisionDTO));
+        return getDTO(division);
+    }
+
+    private Division getSubDivisionFromDTO(CreateDivisionDTO subDivisionDTO) {
+        Employee director = employeeService.getEmployeeById(subDivisionDTO.getDirectorId());
+        Division headDivision = divisionRepository.findById(subDivisionDTO.getHeadDivisionId()).orElse(null);
+        return divisionMapper.subDivisionToEntity(subDivisionDTO, director, headDivision);
     }
 
     private DivisionDTO getDTO(Division division) {
         return divisionMapper.toDTO(division);
     }
 
-    private Division getEntity(CreateDivisionDTO createDivisionDTO) {
+    private Division getDivisionFromDTO(CreateDivisionDTO createDivisionDTO) {
         Employee director = employeeService.getEmployeeById(createDivisionDTO.getDirectorId());
         return divisionMapper.toEntity(createDivisionDTO, director);
     }

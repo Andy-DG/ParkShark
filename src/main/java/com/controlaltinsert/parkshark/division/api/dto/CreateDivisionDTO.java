@@ -1,10 +1,9 @@
 package com.controlaltinsert.parkshark.division.api.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @EqualsAndHashCode
 public class CreateDivisionDTO {
@@ -14,5 +13,7 @@ public class CreateDivisionDTO {
     private String originalName;
 
     private int directorId;
+
+    private int headDivisionId;
 
 }

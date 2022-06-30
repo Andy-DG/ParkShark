@@ -33,6 +33,14 @@ public class Division {
     @JoinColumn(name = "fk_director_id")
     private Employee director;
 
+    @ManyToOne
+    @JoinColumn(name = "fk_head_division_id")
+    private Division headDivision;
+
+    public void setHeadDivision(Division headDivision) {
+        this.headDivision = headDivision;
+    }
+
     public void setDirector(Employee director) {
         this.director = director;
     }
@@ -41,6 +49,11 @@ public class Division {
         this.name = validateName(name);
         this.originalName = validateName(originalName);
         this.director = director;}
+
+    public Division(String name, String originalName, Employee director, Division headDivision) {
+        this(name, originalName, director);
+        this.headDivision = validateHeadDivision(headDivision);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -64,5 +77,12 @@ public class Division {
             throw new IllegalArgumentException(message);
         }
         return name;
+    }
+
+    private Division validateHeadDivision(Division headDivision){
+        if(headDivision.getHeadDivision().getId() != 0){
+            throw new IllegalStateException("Target head division is a subdivision");
+        }
+        return headDivision;
     }
 }
