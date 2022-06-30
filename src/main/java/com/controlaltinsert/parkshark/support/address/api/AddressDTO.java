@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class AddressDTO {
-    private int id;
+    //private int id;
     private String streetName;
     private int streetNumber;
     private PostalCodeDTO postalCodeDTO;

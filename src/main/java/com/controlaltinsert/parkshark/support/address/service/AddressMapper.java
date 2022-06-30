@@ -25,7 +25,6 @@ public class AddressMapper {
 
     public AddressDTO toDTO(Address address) {
         return new AddressDTO(
-                address.getId(),
                 address.getStreetName(),
                 address.getStreetNumber(),
                 postalCodeMapper.toDTO(address.getPostalCode()));

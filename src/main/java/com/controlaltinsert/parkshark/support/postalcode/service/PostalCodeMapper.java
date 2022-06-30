@@ -17,7 +17,6 @@ public class PostalCodeMapper {
 
     public PostalCodeDTO toDTO(PostalCode postalCode) {
         return new PostalCodeDTO(
-                postalCode.getId(),
                 postalCode.getZipCode(),
                 postalCode.getCity());
     }

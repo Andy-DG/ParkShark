@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class PostalCodeDTO {
-    private int id;
     private String zipCode;
     private String city;
 }

@@ -17,8 +17,8 @@ public class Address {
     private final Logger addressLogger = LoggerFactory.getLogger(Address.class);
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq")
-    @SequenceGenerator(name = "address_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_id_seq")
+    @SequenceGenerator(name = "address_id_seq", sequenceName = "address_id_seq", allocationSize = 1)
     private int id;
 
     @Column(name = "street_name")
@@ -27,7 +27,7 @@ public class Address {
     @Column(name = "street_number")
     private int streetNumber;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_postal_code_id")
     private PostalCode postalCode;
 

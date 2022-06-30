@@ -10,8 +10,8 @@ import javax.persistence.*;
 @Table(name = "POSTAL_CODE", schema = "parkshark")
 public class PostalCode {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "POSTAL_CODE_GENERATOR")
-    @SequenceGenerator(name = "POSTAL_CODE_GENERATOR", sequenceName = "postal_code_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "postal_code_id_seq")
+    @SequenceGenerator(name = "postal_code_id_seq", sequenceName = "postal_code_id_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private int id;
 
