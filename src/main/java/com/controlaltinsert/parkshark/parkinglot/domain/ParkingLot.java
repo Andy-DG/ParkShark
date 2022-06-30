@@ -37,13 +37,27 @@ public class ParkingLot {
     @JoinColumn(name = "fk_contact_id")
     private Employee contactPerson;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_division_id")
+    private Division division;
 
-    public ParkingLot(String name, Category category, int maxCapacity, double pricePerHour, Employee contactPerson) {
+
+    public ParkingLot(String name, Category category, int maxCapacity, double pricePerHour, Employee contactPerson, Division division) {
         this.name = validateName(name);
         this.category = validateCategory(category);
         this.maxCapacity = validateMaxCapacity(maxCapacity);
         this.pricePerHour = validatePricePerHour(pricePerHour);
         this.contactPerson = validateEmployee(contactPerson);
+        this.division = validateDivision(division);
+    }
+
+    private Division validateDivision(Division division) {
+        if(division == null){
+            String message = "Division cannot be null";
+            parkingLotLogger.error(message);
+            throw new IllegalArgumentException(message);
+        }
+        return division;
     }
 
     public void setId(int id) {

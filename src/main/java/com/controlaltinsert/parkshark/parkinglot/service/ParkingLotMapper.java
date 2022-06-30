@@ -1,6 +1,7 @@
 package com.controlaltinsert.parkshark.parkinglot.service;
 
 import com.controlaltinsert.parkshark.division.domain.Division;
+import com.controlaltinsert.parkshark.division.service.DivisionMapper;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.employee.service.EmployeeMapper;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.CreateParkingLotDTO;
@@ -15,18 +16,27 @@ import org.springframework.stereotype.Component;
 @Setter
 public class ParkingLotMapper {
     private EmployeeMapper employeeMapper;
+    private DivisionMapper divisionMapper;
 
 
-    public ParkingLot toEntity(CreateParkingLotDTO createParkingLotDTO, Employee contactPerson) {
+    public ParkingLot toEntity(CreateParkingLotDTO createParkingLotDTO, Employee contactPerson, Division division) {
         return new ParkingLot(
                 createParkingLotDTO.getName()
                 , createParkingLotDTO.getCategory()
                 , createParkingLotDTO.getMaxCapacity()
                 , createParkingLotDTO.getPricePerHour()
-                , contactPerson);
+                , contactPerson
+                , division);
     }
 
     public ParkingLotDTO toDTO(ParkingLot parkingLot) {
-        return new ParkingLotDTO(parkingLot.getId(), parkingLot.getName(), parkingLot.getCategory(), parkingLot.getMaxCapacity(), parkingLot.getPricePerHour(), employeeMapper.toDTO(parkingLot.getContactPerson()));
+        return new ParkingLotDTO(
+                parkingLot.getId(),
+                parkingLot.getName(),
+                parkingLot.getCategory(),
+                parkingLot.getMaxCapacity(),
+                parkingLot.getPricePerHour(),
+                employeeMapper.toDTO(parkingLot.getContactPerson()),
+                divisionMapper.toDTO(parkingLot.getDivision()));
     }
 }

@@ -19,4 +19,5 @@ public class CreateParkingLotDTO {
     private int maxCapacity;
     private double pricePerHour;
     private int contactPersonId;
+    private int divisionId;
 }

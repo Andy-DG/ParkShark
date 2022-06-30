@@ -21,4 +21,10 @@ public class ParkingLotController {
     public ParkingLotDTO createParkingLot(@RequestBody CreateParkingLotDTO parkingLotDTO) {
         return this.parkingLotService.createParkingLot(parkingLotDTO);
     }
+
+    @GetMapping(path = "/{id}", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public ParkingLotDTO getParkingLot(@PathVariable int id){
+        return this.parkingLotService.getParkingLotById(id);
+    }
 }
