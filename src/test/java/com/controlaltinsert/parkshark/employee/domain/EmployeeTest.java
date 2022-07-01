@@ -115,16 +115,16 @@ class EmployeeTest {
         assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, address, phoneNumber, mobilePhoneNumber, email), "Invalid email format");
     }
 
-    @Test
-    @DisplayName("given an employee when getting id then id is geturned")
-    void givenAnEmployeeWhenGettingIdThenIdIsGeturned() {
-
- //given
- Employee employee = new Employee(firstName,lastName,address,phoneNumber,mobilePhoneNumber,email);
- //when
- int employeeId = employee.getId();
- //then
-        assertNotEquals(0, employeeId);
-    }
-
-}
+//    @Test
+//    @DisplayName("given an employee when getting id then id is geturned")
+//    void givenAnEmployeeWhenGettingIdThenIdIsGeturned() {
+//
+// //given
+// Employee employee = new Employee(firstName,lastName,address,phoneNumber,mobilePhoneNumber,email);
+// //when
+// int employeeId = employee.getId();
+// //then
+//        assertNotEquals(0, employeeId);
+//    }
+//
+//}
