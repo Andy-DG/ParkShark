@@ -6,6 +6,7 @@ import com.controlaltinsert.parkshark.division.service.DivisionService;
 import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.employee.domain.EmployeeRepository;
+import com.controlaltinsert.parkshark.support.address.api.AddressDTO;
 import com.controlaltinsert.parkshark.support.address.domain.Address;
 import com.controlaltinsert.parkshark.support.address.service.AddressMapper;
 import com.controlaltinsert.parkshark.support.postalcode.domain.PostalCode;
@@ -16,6 +17,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -47,13 +50,19 @@ class EmployeeServiceTest {
         Employee employee = new Employee(
                 "Business", "Boy",
                 address,
-                phoneNumber,mobilePhoneNumber,
+                mobilePhoneNumber, phoneNumber,
                 email);
+        AddressDTO addressDTO = addressMapper.toDTO(address);
         //when
-
+        Mockito.when(employeeRepository.findById(employee.getId())).thenReturn(Optional.of(employee));
         EmployeeDTO actual = employeeService.getEmployeeById(employee.getId());
         //then
-        EmployeeDTO expected = employeeMapper.toDTO(employee);
+
+        EmployeeDTO expected = new EmployeeDTO(employee.getId(),
+                "Business", "Boy",
+                addressDTO,
+                phoneNumber,mobilePhoneNumber,
+                email);
         assertEquals(expected,actual);
 
     }

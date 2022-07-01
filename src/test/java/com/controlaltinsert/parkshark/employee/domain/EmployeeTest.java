@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeTest {
     private int id = 666;
@@ -113,6 +113,18 @@ class EmployeeTest {
 
         //then
         assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, address, phoneNumber, mobilePhoneNumber, email), "Invalid email format");
+    }
+
+    @Test
+    @DisplayName("given an employee when getting id then id is geturned")
+    void givenAnEmployeeWhenGettingIdThenIdIsGeturned() {
+
+ //given
+ Employee employee = new Employee(firstName,lastName,address,phoneNumber,mobilePhoneNumber,email);
+ //when
+ int employeeId = employee.getId();
+ //then
+        assertNotEquals(0, employeeId);
     }
 
 }

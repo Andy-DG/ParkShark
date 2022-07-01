@@ -21,14 +21,14 @@ public class EmployeeService {
 
 
 
-    public EmployeeDTO getEmployeeById(int directorId) {
-        Employee director = employeeRepository.findById(directorId).orElse(null);
-        assertEmployeeExists(director);
-        return employeeMapper.toDTO(director);
+    public EmployeeDTO getEmployeeById(int employeeId) {
+        Employee employee = employeeRepository.findById(employeeId).orElse(null);
+        assertEmployeeExists(employee);
+        return employeeMapper.toDTO(employee);
     }
 
-    private void assertEmployeeExists(Employee director) {
-        if (director == null) {
+    private void assertEmployeeExists(Employee employee) {
+        if (employee == null) {
             String errorMessage = "Employee not found!";
             employeeServiceLogger.error(errorMessage);
             throw new IllegalArgumentException(errorMessage);

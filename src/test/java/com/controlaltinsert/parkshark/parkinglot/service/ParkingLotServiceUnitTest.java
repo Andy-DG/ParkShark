@@ -35,6 +35,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -72,6 +74,7 @@ class ParkingLotServiceUnitTest {
     private EmployeeDTO contactPersonDTO;
 
     DivisionDTO divisionDTO;
+    int divisionId;
 
     @BeforeEach
     void setUp() {
@@ -92,12 +95,18 @@ class ParkingLotServiceUnitTest {
 
         PostalCodeDTO postalCodeDTO = new PostalCodeDTO("E1000", "Edingburg");
         AddressDTO addressDTO = new AddressDTO("RockLane", 15, postalCodeDTO);
-        contactPersonDTO = new EmployeeDTO(15, "Hugh", "Mungus",
+
+        contactPersonId = contactperson.getId();
+        divisionId = division.getId();
+
+        contactPersonDTO = new EmployeeDTO(contactPersonId, "Hugh", "Mungus",
                 addressDTO,
                 "+3214778090", "+40478889945", "hugh@mungus.be");
         divisionDTO = divisionMapper.toDTO(division);
 
-        contactPersonId = contactperson.getId();
+        Mockito.when(employeeRepository.findById(contactPersonId)).thenReturn(Optional.of(contactperson));
+        Mockito.when(divisionRepository.findById(divisionId)).thenReturn(Optional.of(division));
+
     }
 
     @Test
@@ -109,52 +118,36 @@ class ParkingLotServiceUnitTest {
                 .pricePerHour(4.20)
                 .category(Category.UNDERGROUND)
                 .contactPersonId(contactPersonId)
+                .divisionId(divisionId)
                 .build();
 
-        ParkingLot returnedParkingLot = this.parkingLotMapper.toEntity(createParkingLotDTO, contactPersonDTO, divisionDTO);
-        ParkingLotDTO lotDTO = this.parkingLotMapper.toDTO(returnedParkingLot);
+        ParkingLot returnedParkingLot = parkingLotMapper.toEntity(createParkingLotDTO, contactPersonDTO, divisionDTO);
+        ParkingLotDTO lotDTO = parkingLotMapper.toDTO(returnedParkingLot);
         lotDTO.setId(id);
 
-        postalCodeMapper = Mockito.mock(PostalCodeMapper.class);
-        addressMapper = Mockito.mock(AddressMapper.class);
-        addressMapper.setPostalCodeMapper(postalCodeMapper);
-        employeeMapper = Mockito.mock(EmployeeMapper.class);
-        employeeMapper.setAddressMapper(addressMapper);
-        parkingLotMapper = Mockito.mock(ParkingLotMapper.class);
-        parkingLotMapper.setEmployeeMapper(employeeMapper);
-        parkingLotRepository = Mockito.mock(ParkingLotRepository.class);
-        parkingLotService = Mockito.mock(ParkingLotService.class);
-        parkingLotService.setParkingLotRepository(parkingLotRepository);
-        parkingLotService.setParkingLotMapper(parkingLotMapper);
-
-        //Mockito.when(this.employeeMapper.toDTO(returnedParkingLot.getContactPerson())).thenReturn(employeeDTO);
-        Mockito.when(this.parkingLotService.createParkingLot(createParkingLotDTO)).thenReturn(lotDTO);
-
-
         //actual test
-        ParkingLotDTO actual = this.parkingLotService.createParkingLot(createParkingLotDTO);
+        ParkingLotDTO actual = parkingLotService.createParkingLot(createParkingLotDTO);
 
         assertEquals(createParkingLotDTO.getName(), actual.getName());
         assertEquals(createParkingLotDTO.getMaxCapacity(), actual.getMaxCapacity());
         assertEquals(createParkingLotDTO.getCategory(), actual.getCategory());
         assertEquals(createParkingLotDTO.getPricePerHour(), actual.getPricePerHour());
-        //assertEquals(createParkingLotDTO.getContactPerson(), actual.getContactPerson());
-
-        assertEquals(id, actual.getId());
+        assertEquals(createParkingLotDTO.getContactPersonId(), actual.getContactPerson().getId());
     }
 
     @ParameterizedTest
     @NullAndEmptySource
     @DisplayName("given a createParkingLotDTO with a blank name when creating a new parking lot then throw illegalArgumentException")
     void givenACreateParkingLotDtoWithABlankNameWhenCreatingANewParkingLotThenThrowIllegalArgumentException(String nullAndEmpty) {
-        CreateParkingLotDTO createParkingLotDTO = CreateParkingLotDTO.builder()
-                .name(nullAndEmpty)
-                .maxCapacity(150)
-                .pricePerHour(4.20)
-                .category(Category.UNDERGROUND)
-                .contactPersonId(contactPersonId)
-                .divisionId(division.getId())
-                .build();
+//        CreateParkingLotDTO createParkingLotDTO = CreateParkingLotDTO.builder()
+//                .name(nullAndEmpty)
+//                .maxCapacity(150)
+//                .pricePerHour(4.20)
+//                .category(Category.UNDERGROUND)
+//                .contactPersonId(contactPersonId)
+//                .divisionId(division.getId())
+//                .build();
+        CreateParkingLotDTO createParkingLotDTO = new CreateParkingLotDTO(nullAndEmpty,Category.UNDERGROUND,150, 4.20,contactPersonId,division.getId());
 
         assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO));
     }
@@ -168,10 +161,10 @@ class ParkingLotServiceUnitTest {
                 .pricePerHour(4.20)
                 .category(Category.UNDERGROUND)
                 .contactPersonId(contactPersonId)
-                .divisionId(division.getId())
+                .divisionId(divisionId)
                 .build();
 
-        assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO));
+        assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO),"Category cannot be null");
     }
 
     @ParameterizedTest
@@ -184,7 +177,7 @@ class ParkingLotServiceUnitTest {
                 .pricePerHour(0)
                 .category(Category.UNDERGROUND)
                 .contactPersonId(contactPersonId)
-                .divisionId(division.getId())
+                .divisionId(divisionId)
                 .build();
 
         assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO));
@@ -199,7 +192,7 @@ class ParkingLotServiceUnitTest {
                 .pricePerHour(4.20)
                 .category(null)
                 .contactPersonId(contactPersonId)
-                .divisionId(division.getId())
+                .divisionId(divisionId)
                 .build();
 
         assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO));
