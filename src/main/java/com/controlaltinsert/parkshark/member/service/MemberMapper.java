@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +34,8 @@ public class MemberMapper {
                 createMemberDTO.getEmail(),
                 address,
                 createMemberDTO.getRegistrationDate(),
-                licensePlate);
+                licensePlate,
+                createMemberDTO.getMembershipLevel());
     }
 
     public MemberDTO toDTO(Member member) {
@@ -48,7 +48,8 @@ public class MemberMapper {
                 member.getEmail(),
                 member.getAddress().getId(),
                 member.getRegistrationDate(),
-                member.getLicensePlate());
+                member.getLicensePlate(),
+                member.getFkMembershipLevelId());
     }
 
     public List<MemberDTO> toDTO(List<Member> members) {

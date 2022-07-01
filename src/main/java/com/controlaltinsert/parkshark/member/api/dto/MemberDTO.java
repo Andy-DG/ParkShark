@@ -1,5 +1,6 @@
 package com.controlaltinsert.parkshark.member.api.dto;
 
+import com.controlaltinsert.parkshark.member.level.domain.MembershipLevel;
 import com.controlaltinsert.parkshark.support.licenseplate.domain.LicensePlate;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -24,18 +25,18 @@ public class MemberDTO {
     int fk_address_id;
     LocalDate registrationDate;
     LicensePlate licensePlate;
-
+    MembershipLevel membershipLevel;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof MemberDTO)) return false;
         MemberDTO memberDTO = (MemberDTO) o;
-        return fk_address_id == memberDTO.fk_address_id && Objects.equals(firstName, memberDTO.firstName) && Objects.equals(lastName, memberDTO.lastName) && Objects.equals(mobile, memberDTO.mobile) && Objects.equals(phone, memberDTO.phone) && Objects.equals(email, memberDTO.email) && Objects.equals(registrationDate, memberDTO.registrationDate) && Objects.equals(licensePlate, memberDTO.licensePlate);
+        return getFk_address_id() == memberDTO.getFk_address_id() && Objects.equals(getFirstName(), memberDTO.getFirstName()) && Objects.equals(getLastName(), memberDTO.getLastName()) && Objects.equals(getMobile(), memberDTO.getMobile()) && Objects.equals(getPhone(), memberDTO.getPhone()) && Objects.equals(getEmail(), memberDTO.getEmail()) && Objects.equals(getRegistrationDate(), memberDTO.getRegistrationDate()) && Objects.equals(getLicensePlate(), memberDTO.getLicensePlate()) && getMembershipLevel() == memberDTO.getMembershipLevel();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, mobile, phone, email, fk_address_id, registrationDate, licensePlate);
+        return Objects.hash(getFirstName(), getLastName(), getMobile(), getPhone(), getEmail(), getFk_address_id(), getRegistrationDate(), getLicensePlate(), getMembershipLevel());
     }
 }

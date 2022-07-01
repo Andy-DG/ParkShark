@@ -1,12 +1,10 @@
 package com.controlaltinsert.parkshark.member.domain;
 
+import com.controlaltinsert.parkshark.member.level.domain.MembershipLevel;
 import com.controlaltinsert.parkshark.support.address.domain.Address;
-import com.controlaltinsert.parkshark.support.licenseplate.api.LicensePlateDTO;
 import com.controlaltinsert.parkshark.support.licenseplate.domain.LicensePlate;
-import com.controlaltinsert.parkshark.util.Validate;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.Cascade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +20,7 @@ import static com.controlaltinsert.parkshark.util.Validate.*;
 @NoArgsConstructor
 @Getter
 public class Member {
+    public static final MembershipLevel DEFAULT_MEMBERSHIP_LEVEL = MembershipLevel.BRONZE;
     static Logger memberLogger = LoggerFactory.getLogger(Member.class);
 
     @Id
@@ -55,7 +54,11 @@ public class Member {
     @JoinColumn(name = "fk_license_plate_id")
     LicensePlate licensePlate;
 
-    public Member(String firstName, String lastName, String mobile, String phone, String email, Address fk_address_id, LocalDate registrationDate, LicensePlate licensePlate) {
+    @Enumerated(EnumType.ORDINAL)
+    @JoinColumn(name = "fk_membership_level_id")
+    MembershipLevel fkMembershipLevelId = DEFAULT_MEMBERSHIP_LEVEL;
+
+    public Member(String firstName, String lastName, String mobile, String phone, String email, Address fk_address_id, LocalDate registrationDate, LicensePlate licensePlate, MembershipLevel membershipLevel) {
         this.firstName = validateString(firstName, "Firstname");
         this.lastName = validateString(lastName, "Lastname");
         validateToHaveAPhoneNumber(phone, mobile);
@@ -65,6 +68,7 @@ public class Member {
         this.address = validateAddress(fk_address_id);
         this.registrationDate = registrationDate;
         this.licensePlate = validateLicensePlate(licensePlate);
+        this.fkMembershipLevelId = validateMembershipLevel(membershipLevel);
     }
 
     private LicensePlate validateLicensePlate(LicensePlate licensePlate) {
@@ -74,6 +78,15 @@ public class Member {
             throw new IllegalArgumentException(errorMessage);
         }
         return licensePlate;
+    }
+
+    MembershipLevel validateMembershipLevel(MembershipLevel membershipLevel){
+        if (membershipLevel == null){
+            String errorMessage = "Must specify a membership level!";
+            memberLogger.error(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
+        }
+        return membershipLevel;
     }
 }
 
