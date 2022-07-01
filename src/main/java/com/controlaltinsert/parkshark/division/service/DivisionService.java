@@ -4,6 +4,7 @@ import com.controlaltinsert.parkshark.division.api.dto.CreateDivisionDTO;
 import com.controlaltinsert.parkshark.division.api.dto.DivisionDTO;
 import com.controlaltinsert.parkshark.division.domain.Division;
 import com.controlaltinsert.parkshark.division.domain.DivisionRepository;
+import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.employee.service.EmployeeService;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotListDTO;
@@ -54,8 +55,8 @@ public class DivisionService {
 
 
     private Division getEntity(CreateDivisionDTO createDivisionDTO) {
-        Employee director = employeeService.getEmployeeById(createDivisionDTO.getDirectorId());
-        return divisionMapper.toEntity(createDivisionDTO, director);
+        EmployeeDTO directorDTO = employeeService.getEmployeeById(createDivisionDTO.getDirectorId());
+        return divisionMapper.toEntity(createDivisionDTO, directorDTO);
     }
 
     private DivisionDTO getDTO(Division division) {
