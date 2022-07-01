@@ -58,8 +58,9 @@ public class Member {
     public Member(String firstName, String lastName, String mobile, String phone, String email, Address fk_address_id, LocalDate registrationDate, LicensePlate licensePlate) {
         this.firstName = validateString(firstName, "Firstname");
         this.lastName = validateString(lastName, "Lastname");
-        this.mobile = validatePhoneNumberFormat(mobile);
-        this.phone = validatePhoneNumberFormat(phone);
+        validateToHaveAPhoneNumber(phone, mobile);
+        this.mobile = mobile;
+        this.phone = phone;
         this.email = validateEmail(email);
         this.address = validateAddress(fk_address_id);
         this.registrationDate = registrationDate;

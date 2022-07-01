@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "license_plate", schema = "parkshark")
@@ -31,5 +32,18 @@ public class LicensePlate {
     public LicensePlate(String licensePlate, String country) {
         this.licensePlate = licensePlate;
         this.country = country;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LicensePlate)) return false;
+        LicensePlate that = (LicensePlate) o;
+        return Objects.equals(licensePlate, that.licensePlate) && Objects.equals(country, that.country);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(licensePlate, country);
     }
 }

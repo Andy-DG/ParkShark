@@ -33,8 +33,7 @@ public class MemberService {
     }
 
     public List<MemberDTO> getAllMembers() {
-        List<Member> members = this.memberRepository.findAll();
-        return members.stream().map(member -> memberMapper.toDTO(member)).collect(Collectors.toUnmodifiableList());
+        return this.memberMapper.toDTO(this.memberRepository.findAll());
     }
 
     public MemberDTO getMemberById(int id) {

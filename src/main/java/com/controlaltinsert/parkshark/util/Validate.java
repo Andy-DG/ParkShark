@@ -28,10 +28,13 @@ public class Validate {
             validateLogger.error(errorMessage);
             throw new IllegalArgumentException(errorMessage);
         } else {
-            if (!isNullOrBlank(phoneNumber)) {
-                validatePhoneNumberFormat(phoneNumber);
-            } else {
+            if (!isNullOrBlank(phoneNumber) && !isNullOrBlank(mobilePhoneNumber)) {
                 validatePhoneNumberFormat(mobilePhoneNumber);
+                validatePhoneNumberFormat(phoneNumber);
+            } else if(!isNullOrBlank(mobilePhoneNumber) && isNullOrBlank(phoneNumber)) {
+                validatePhoneNumberFormat(mobilePhoneNumber);
+            } else {
+                validatePhoneNumberFormat(phoneNumber);
             }
         }
     }

@@ -12,6 +12,10 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -45,5 +49,9 @@ public class MemberMapper {
                 member.getAddress().getId(),
                 member.getRegistrationDate(),
                 member.getLicensePlate());
+    }
+
+    public List<MemberDTO> toDTO(List<Member> members) {
+        return members.stream().map(this::toDTO).collect(Collectors.toList());
     }
 }
