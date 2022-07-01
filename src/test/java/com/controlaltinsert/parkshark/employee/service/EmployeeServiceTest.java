@@ -66,16 +66,4 @@ class EmployeeServiceTest {
         assertEquals(expected,actual);
 
     }
-
-    @Test
-    @DisplayName("given a null or blank employee ID when trying to find the employee based on empty id then an exception is thrown")
-    void givenANullOrBlankEmployeeIdWhenTryingToFindTheEmployeeBasedOnEmptyIdThenAnExceptionIsThrown() {
-        fail("Not implemented");
-        //given
-
-        //when
-
-        //then
-
-    }
 }

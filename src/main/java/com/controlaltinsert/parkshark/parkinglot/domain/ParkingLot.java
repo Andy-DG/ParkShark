@@ -79,7 +79,7 @@ public class ParkingLot {
     }
 
     private int validateMaxCapacity(int maxCapacity) {
-        if(maxCapacity < 0){
+        if(maxCapacity <= 0){
             String message = "Max capacity must be more than zero";
             parkingLotLogger.error(message);
             throw new IllegalArgumentException(message);

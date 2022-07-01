@@ -91,6 +91,7 @@ class ParkingLotServiceUnitTest {
 
         parkingLotMapper = new ParkingLotMapper(employeeMapper, divisionMapper);
         parkingLotRepository = Mockito.mock(ParkingLotRepository.class);
+
         parkingLotService = new ParkingLotService(parkingLotMapper, parkingLotRepository, employeeService, divisionService);
 
         PostalCodeDTO postalCodeDTO = new PostalCodeDTO("E1000", "Edingburg");
@@ -112,18 +113,18 @@ class ParkingLotServiceUnitTest {
     @Test
     @DisplayName("given a createParkingDTO with all fields filled, when adding a parking lot, then return the parkinglot")
     void givenACreateParkingDtoWithAllFieldsFilledWhenAddingAParkingLotThenReturnTheParkinglot() {
-        CreateParkingLotDTO createParkingLotDTO = CreateParkingLotDTO.builder()
-                .name("TestParking")
-                .maxCapacity(150)
-                .pricePerHour(4.20)
-                .category(Category.UNDERGROUND)
-                .contactPersonId(contactPersonId)
-                .divisionId(divisionId)
-                .build();
+        CreateParkingLotDTO createParkingLotDTO = new CreateParkingLotDTO(
+                "TestParking",
+                Category.UNDERGROUND,
+                150,
+                4.20,
+                contactPersonId,
+                division.getId());
 
-        ParkingLot returnedParkingLot = parkingLotMapper.toEntity(createParkingLotDTO, contactPersonDTO, divisionDTO);
-        ParkingLotDTO lotDTO = parkingLotMapper.toDTO(returnedParkingLot);
+        ParkingLot parkingLot = parkingLotMapper.toEntity(createParkingLotDTO, contactPersonDTO, divisionDTO);
+        ParkingLotDTO lotDTO = parkingLotMapper.toDTO(parkingLot);
         lotDTO.setId(id);
+        Mockito.when(parkingLotRepository.save(Mockito.any(ParkingLot.class))).thenReturn(parkingLot);
 
         //actual test
         ParkingLotDTO actual = parkingLotService.createParkingLot(createParkingLotDTO);
@@ -138,43 +139,43 @@ class ParkingLotServiceUnitTest {
     @ParameterizedTest
     @NullAndEmptySource
     @DisplayName("given a createParkingLotDTO with a blank name when creating a new parking lot then throw illegalArgumentException")
-    void givenACreateParkingLotDtoWithABlankNameWhenCreatingANewParkingLotThenThrowIllegalArgumentException(String nullAndEmpty) {
-//        CreateParkingLotDTO createParkingLotDTO = CreateParkingLotDTO.builder()
-//                .name(nullAndEmpty)
-//                .maxCapacity(150)
-//                .pricePerHour(4.20)
-//                .category(Category.UNDERGROUND)
-//                .contactPersonId(contactPersonId)
-//                .divisionId(division.getId())
-//                .build();
-        CreateParkingLotDTO createParkingLotDTO = new CreateParkingLotDTO(nullAndEmpty,Category.UNDERGROUND,150, 4.20,contactPersonId,division.getId());
+    void givenACreateParkingLotDtoWithABlankNameWhenCreatingANewParkingLotThenThrowIllegalArgumentException(String name) {
+//
+        CreateParkingLotDTO createParkingLotDTO = new CreateParkingLotDTO(
+                name,
+                Category.UNDERGROUND,
+                150,
+                4.20,
+                contactPersonId,
+                division.getId());
 
         assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO));
     }
 
-    @Test
-    @DisplayName("given a createParkingLotDTO with a maxCapacity less than 0 when creating a new parking lot then throw illegalArgumentException")
-    void givenACreateParkingLotDtoWithAMaxCapacityLessThanZeroWhenCreatingANewParkingLotThenThrowIllegalArgumentException() {
+    @ParameterizedTest
+    @ValueSource(ints = {0,-1,-9999})
+    @DisplayName("given a createParkingLotDTO with a maxCapacity of 0 or less when creating a new parking lot then throw illegalArgumentException")
+    void givenACreateParkingLotDtoWithAMaxCapacityLessThanZeroWhenCreatingANewParkingLotThenThrowIllegalArgumentException(int maxCapacity) {
         CreateParkingLotDTO createParkingLotDTO = CreateParkingLotDTO.builder()
                 .name("Just ja")
-                .maxCapacity(-1)
+                .maxCapacity(maxCapacity)
                 .pricePerHour(4.20)
                 .category(Category.UNDERGROUND)
                 .contactPersonId(contactPersonId)
                 .divisionId(divisionId)
                 .build();
 
-        assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO),"Category cannot be null");
+        assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO), "Category cannot be null");
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = {0,-1,-0.0001,-500})
+    @ValueSource(doubles = {0, -1, -0.0001, -500})
     @DisplayName("given a CreateParkingLotDTO with price per hour of zero or less then throw IllegalArgumentException")
-    void givenACreateParkingLotDtoWithPricePerHourOfZeroOrLessThenThrowIllegalArgumentException() {
+    void givenACreateParkingLotDtoWithPricePerHourOfZeroOrLessThenThrowIllegalArgumentException(double price) {
         CreateParkingLotDTO createParkingLotDTO = CreateParkingLotDTO.builder()
                 .name("Just ja")
                 .maxCapacity(10)
-                .pricePerHour(0)
+                .pricePerHour(price)
                 .category(Category.UNDERGROUND)
                 .contactPersonId(contactPersonId)
                 .divisionId(divisionId)
