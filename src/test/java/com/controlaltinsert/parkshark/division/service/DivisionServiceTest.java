@@ -86,10 +86,6 @@ class DivisionServiceTest {
         //given
         name = nullAndEmpty;
         CreateDivisionDTO createDivisionDTO = new CreateDivisionDTO(name, originalName, director.getId());
-
-
-        //when
-
         //then
         assertThrows(IllegalArgumentException.class, () -> divisionService.createDivision(createDivisionDTO));
     }
@@ -97,27 +93,36 @@ class DivisionServiceTest {
     @Test
     @DisplayName("when creating a new division without specifying the head division, the head division id is zero")
     void whenCreatingANewDivisionWithoutSpecifyingTheHeadDivisionTheHeadDivisionIdIsZero() {
-
-        //given
-
         //when
-        Division division = new Division(name,originalName,director);
-
+        Division division = new Division(name, originalName, director);
         //then
-        assertEquals(0,division.getFkHeadDivisionId());
-
+        assertEquals(0, division.getFkHeadDivisionId());
     }
 
     @Test
     @DisplayName("given a division and a subdivision, when creating a new subdivision of that subdivision then an exception is thrown")
     void givenADivisionAndASubdivisionWhenCreatingANewSubdivisionOfThatSubdivisionThenAnExceptionIsThrown() {
         //given
-        Division headDivision = new Division(name,originalName,director);
-        Division subDivision = new Division("subdivision","original name", director, headDivision.getId());
+        Division headDivision = new Division(name, originalName, director);
+        Division subDivision = new Division("subdivision", "original name", director, headDivision.getId());
         //when
-        CreateDivisionDTO subSubDivision = new CreateDivisionDTO("subSub","original",director.getId(),subDivision.getId());
+        CreateDivisionDTO subSubDivision = new CreateDivisionDTO("subSub", "original", director.getId(), subDivision.getId());
         //then
         assertThrows(IllegalArgumentException.class, () -> divisionService.createDivision(subSubDivision));
+    }
 
+    @Test
+    @DisplayName("when creating a subdivision of an unexisting head division then throw exception")
+    void whenCreatingASubdivisionOfAnUnexistingHeadDivisionThenThrowException() {
+        //when
+        CreateDivisionDTO createSubDivisionDTO = new CreateDivisionDTO("sub", "original", director.getId(), 999874561);
+        //then
+        assertThrows(IllegalArgumentException.class, () -> divisionService.createDivision(createSubDivisionDTO));
+    }
+
+    @Test
+    @DisplayName("when trying to find a division that doesn't exist then trow exception")
+    void whenTryingToFindADivisionThatDoesnTExistThenTrowException() {
+        assertThrows(IllegalArgumentException.class, () -> divisionService.getDivisionById(999874561));
     }
 }
