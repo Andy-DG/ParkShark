@@ -51,3 +51,4 @@ https://github.com/switchfully/track-shared/tree/master/60-projects/20-parkshark
 - waarom moet de variable name specifiek zijn bij @joincolumn, zie membershiplevel bij member
 - waarom moet ge de name specifieren bij @joincolumn als dat genegeerd wordt / wat moet er in de application properties worden toegevoegd.
 - max 7 parameters in constructor? -> builder? setter?
+- cascade types? error when adding parking lot (something about the employee)

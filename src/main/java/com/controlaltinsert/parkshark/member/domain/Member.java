@@ -82,9 +82,7 @@ public class Member {
 
     MembershipLevel validateMembershipLevel(MembershipLevel membershipLevel){
         if (membershipLevel == null){
-            String errorMessage = "Must specify a membership level!";
-            memberLogger.error(errorMessage);
-            throw new IllegalArgumentException(errorMessage);
+            membershipLevel = MembershipLevel.BRONZE;
         }
         return membershipLevel;
     }

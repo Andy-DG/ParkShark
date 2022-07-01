@@ -31,7 +31,7 @@ public class Employee {
     @Column(name = "last_name")
     private String lastName;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_address_id")
     private Address address;
 
