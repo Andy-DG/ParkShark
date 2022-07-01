@@ -8,6 +8,8 @@ import com.controlaltinsert.parkshark.employee.service.EmployeeMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class DivisionMapper {
@@ -19,6 +21,10 @@ public class DivisionMapper {
 
     public DivisionDTO toDTO(Division division) {
         return new DivisionDTO(division.getId(), division.getName(), division.getOriginalName(), employeeMapper.toDTO(division.getDirector()), division.getHeadDivisionId());
+    }
+
+    public List<DivisionDTO> toDTO(List<Division> divisions) {
+        return divisions.stream().map(this::toDTO).toList();
     }
 
 

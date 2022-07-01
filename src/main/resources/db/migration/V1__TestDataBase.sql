@@ -4,9 +4,9 @@ CREATE TABLE IF NOT EXISTS parkshark."DIVISION"
 (
     id serial NOT NULL,
     name character varying NOT NULL,
-    orginal_name character varying NOT NULL,
+    original_name character varying NOT NULL,
     fk_director_id serial NOT NULL,
---     fk_division_head_id serial,
+    fk_head_division_id serial,
     PRIMARY KEY (id)
 );
 CREATE TABLE IF NOT EXISTS parkshark."ADDRESS"

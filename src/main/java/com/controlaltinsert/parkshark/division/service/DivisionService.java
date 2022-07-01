@@ -6,12 +6,15 @@ import com.controlaltinsert.parkshark.division.domain.Division;
 import com.controlaltinsert.parkshark.division.domain.DivisionRepository;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.employee.service.EmployeeService;
+import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotListDTO;
+import com.controlaltinsert.parkshark.parkinglot.domain.ParkingLot;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -73,10 +76,8 @@ public class DivisionService {
         }
     }
 
-    private int validateHeadDivisionId(int headDivisionId) {
-        if (headDivisionId != 0) {
-            throw new IllegalStateException("Target head division is a subdivision");
-        }
-        return headDivisionId;
+    public List<DivisionDTO> viewAllDivisions() {
+        List<Division> divisions = divisionRepository.findAll();
+        return divisionMapper.toDTO(divisions);
     }
 }
