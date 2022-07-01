@@ -16,9 +16,9 @@ import java.util.List;
 @RequestMapping("divisions")
 @AllArgsConstructor
 public class DivisionController {
-private DivisionService divisionService;
+    private DivisionService divisionService;
 
-    @PostMapping(path = "/add",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/add", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public DivisionDTO createDivision(@RequestBody CreateDivisionDTO divisionDTO) {
         if (divisionDTO.getHeadDivisionId() != 0){

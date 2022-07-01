@@ -13,49 +13,54 @@ import com.controlaltinsert.parkshark.support.address.domain.Address;
 import com.controlaltinsert.parkshark.support.address.service.AddressMapper;
 import com.controlaltinsert.parkshark.support.postalcode.domain.PostalCode;
 import com.controlaltinsert.parkshark.support.postalcode.service.PostalCodeMapper;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import javax.persistence.Access;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@ExtendWith(MockitoExtension.class)
 class DivisionServiceTest {
-    private int id = 1;
-    private final int HOOFDZETEL_PARK_SHARK = 0;
-    private String name = "ParkShark Ghelamco";
-    private String originalName = "Parking Service Buffalo K.A.A. Gent Ghelamco";
-    private Address address = new Address("Hoheloon", 7, new PostalCode("B4400", "Zulu"));
-    private Employee director = new Employee("Rick", "Sanchez", address, "+3214804060", "+32479252939", "man@domain.com");
+    final int id = 1;
 
+    String name = "ParkShark Ghelamco";
+    String originalName = "Parking Service Buffalo K.A.A. Gent Ghelamco";
+    Address address = new Address("Hoheloon", 7, new PostalCode("B4400", "Zulu"));
+    Employee director = new Employee("Rick", "Sanchez", address, "+3214804060", "+32479252939", "man@domain.com");
 
-    Division headDivision;
-    DivisionDTO headDivisionDTO;
-
-    private PostalCodeMapper postalCodeMapper;
-    private AddressMapper addressMapper;
-    private EmployeeMapper employeeMapper;
-    private EmployeeRepository employeeRepository;
-    private EmployeeService employeeService;
-    private DivisionMapper divisionMapper;
-    private DivisionService divisionService;
-    private DivisionRepository divisionRepository;
+    PostalCodeMapper postalCodeMapper;
+    AddressMapper addressMapper;
+    EmployeeMapper employeeMapper;
+    EmployeeRepository employeeRepository;
+    EmployeeService employeeService;
+    DivisionMapper divisionMapper;
+    DivisionService divisionService;
+    DivisionRepository divisionRepository;
 
     @BeforeEach
     void setUp() {
         postalCodeMapper = new PostalCodeMapper();
         addressMapper = new AddressMapper(postalCodeMapper);
         employeeMapper = new EmployeeMapper(addressMapper);
+        divisionMapper = new DivisionMapper(employeeMapper);
+
         employeeRepository = Mockito.mock(EmployeeRepository.class);
         employeeService = new EmployeeService(employeeRepository);
-        divisionMapper = new DivisionMapper(employeeMapper);
+
         divisionRepository = Mockito.mock(DivisionRepository.class);
         divisionService = new DivisionService(divisionRepository, divisionMapper, employeeService);
-        headDivision = Mockito.mock(Division.class);
-        headDivisionDTO = Mockito.mock(DivisionDTO.class);
+
     }
 
     @Test
@@ -67,7 +72,7 @@ class DivisionServiceTest {
         EmployeeDTO directorDTO = employeeMapper.toDTO(director);
         CreateDivisionDTO expectedDTO = new CreateDivisionDTO(name, originalName, directorDTO.getId(), 0);
 
-        Division expected = divisionMapper.toEntity(expectedDTO,director);
+        Division expected = divisionMapper.toEntity(expectedDTO, director);
 
         DivisionDTO divisionDTO = divisionMapper.toDTO(expected);
         divisionDTO.setId(id);
@@ -90,14 +95,14 @@ class DivisionServiceTest {
     @DisplayName("given a division to create with an empty or null name when creating new division then throw illegal argument exception")
     void givenADivisionToCreateWithAnEmptyOrNullNameWhenCreatingNewDivisionThenThrowIllegalArgumentException(String nullAndEmpty) {
 
- //given
+        //given
         name = nullAndEmpty;
         CreateDivisionDTO createDivisionDTO = new CreateDivisionDTO(name, originalName, director.getId());
 
 
- //when
+        //when
 
- //then
+        //then
         assertThrows(IllegalArgumentException.class, () -> divisionService.createDivision(createDivisionDTO));
 
 
