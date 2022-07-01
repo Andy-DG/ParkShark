@@ -15,7 +15,22 @@ public class EmployeeMapper {
     private AddressMapper addressMapper;
 
     public Employee toEntity(CreateEmployeeDTO createEmployeeDTO) {
-        return new Employee(createEmployeeDTO.getFirstName(), createEmployeeDTO.getLastName(), addressMapper.toEntity(createEmployeeDTO.getAddress()), createEmployeeDTO.getPhoneNumber(), createEmployeeDTO.getMobilePhoneNumber(), createEmployeeDTO.getEmail());
+        return new Employee(
+                createEmployeeDTO.getFirstName(),
+                createEmployeeDTO.getLastName(),
+                addressMapper.toEntity(createEmployeeDTO.getAddress()),
+                createEmployeeDTO.getPhoneNumber(),
+                createEmployeeDTO.getMobilePhoneNumber(),
+                createEmployeeDTO.getEmail());
+    }
+    public Employee toEntity(EmployeeDTO employeeDTO) {
+        return new Employee(
+                employeeDTO.getFirstName(),
+                employeeDTO.getLastName(),
+                addressMapper.toEntity(employeeDTO.getAddress()),
+                employeeDTO.getPhoneNumber(),
+                employeeDTO.getMobilePhoneNumber(),
+                employeeDTO.getEmail());
     }
 
 

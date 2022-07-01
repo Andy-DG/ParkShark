@@ -1,5 +1,6 @@
 package com.controlaltinsert.parkshark.employee.service;
 
+import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.employee.domain.EmployeeRepository;
 import lombok.AllArgsConstructor;
@@ -15,15 +16,15 @@ import javax.transaction.Transactional;
 public class EmployeeService {
 
     private final Logger employeeServiceLogger = LoggerFactory.getLogger(EmployeeService.class);
-
+    EmployeeMapper employeeMapper;
     EmployeeRepository employeeRepository;
 
 
 
-    public Employee getEmployeeById(int directorId) {
+    public EmployeeDTO getEmployeeById(int directorId) {
         Employee director = employeeRepository.findById(directorId).orElse(null);
         assertDirectorExists(director);
-        return director;
+        return employeeMapper.toDTO(director);
     }
 
     private void assertDirectorExists(Employee director) {
