@@ -1,5 +1,6 @@
 package com.controlaltinsert.parkshark.parkinglot.service;
 
+import com.controlaltinsert.parkshark.division.api.dto.DivisionDTO;
 import com.controlaltinsert.parkshark.division.domain.Division;
 import com.controlaltinsert.parkshark.division.domain.DivisionRepository;
 import com.controlaltinsert.parkshark.division.service.DivisionMapper;
@@ -20,6 +21,8 @@ import com.controlaltinsert.parkshark.support.address.service.AddressMapper;
 import com.controlaltinsert.parkshark.support.postalcode.api.PostalCodeDTO;
 import com.controlaltinsert.parkshark.support.postalcode.domain.PostalCode;
 import com.controlaltinsert.parkshark.support.postalcode.service.PostalCodeMapper;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,6 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @ExtendWith(MockitoExtension.class)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 class ParkingLotServiceUnitTest {
     private static int id = 1111111;
     private Employee contactperson = new Employee("Andy", "Builder",
@@ -44,7 +48,7 @@ class ParkingLotServiceUnitTest {
     private Employee director = new Employee("Boris", "De Beer",
             new Address("Nieuwstraat", 1, new PostalCode("1000", "Brussel")),
             "", "+32123456789", "boris.debeer@parkshark.be");
-    private Division division = new Division(name, originalName, director,0);
+    private Division division = new Division(name, originalName, director, 0);
 
     private PostalCodeMapper postalCodeMapper;
     private AddressMapper addressMapper;
@@ -61,7 +65,9 @@ class ParkingLotServiceUnitTest {
 
     private ParkingLotRepository parkingLotRepository;
     private ParkingLotService parkingLotService;
-    private EmployeeDTO employeeDTO;
+    private EmployeeDTO contactpersonDTO;
+
+    DivisionDTO divisionDTO;
 
 
     @BeforeEach
@@ -71,21 +77,22 @@ class ParkingLotServiceUnitTest {
 
         employeeMapper = new EmployeeMapper(addressMapper);
         employeeRepository = Mockito.mock(EmployeeRepository.class);
-        employeeService = new EmployeeService(employeeRepository);
+        employeeService = new EmployeeService(employeeMapper, employeeRepository);
 
         divisionMapper = new DivisionMapper(employeeMapper);
         divisionRepository = Mockito.mock(DivisionRepository.class);
-        divisionService = new DivisionService(divisionRepository,divisionMapper,employeeService);
+        divisionService = new DivisionService(divisionRepository, divisionMapper, employeeService);
 
-        parkingLotMapper = new ParkingLotMapper(employeeMapper,divisionMapper);
+        parkingLotMapper = new ParkingLotMapper(employeeMapper, divisionMapper);
         parkingLotRepository = Mockito.mock(ParkingLotRepository.class);
         parkingLotService = new ParkingLotService(parkingLotMapper, parkingLotRepository, employeeService, divisionService);
 
-        PostalCodeDTO postalCodeDTO = new PostalCodeDTO(1000, "E1000", "Edingburg");
-        AddressDTO addressDTO = new AddressDTO(40, "RockLane", 15, postalCodeDTO);
-        employeeDTO = new EmployeeDTO(15, "Hugh", "Mungus",
+        PostalCodeDTO postalCodeDTO = new PostalCodeDTO("E1000", "Edingburg");
+        AddressDTO addressDTO = new AddressDTO("RockLane", 15, postalCodeDTO);
+        contactpersonDTO = new EmployeeDTO(15, "Hugh", "Mungus",
                 addressDTO,
                 "+3214778090", "+40478889945", "hugh@mungus.be");
+        divisionDTO = divisionMapper.toDTO(division);
     }
 
     @Test
@@ -99,7 +106,7 @@ class ParkingLotServiceUnitTest {
                 .contactPersonId(contactperson.getId())
                 .build();
 
-        ParkingLot returnedParkingLot = this.parkingLotMapper.toEntity(createParkingLotDTO, contactperson, division);
+        ParkingLot returnedParkingLot = this.parkingLotMapper.toEntity(createParkingLotDTO, contactpersonDTO, divisionDTO);
         ParkingLotDTO lotDTO = this.parkingLotMapper.toDTO(returnedParkingLot);
         lotDTO.setId(id);
 

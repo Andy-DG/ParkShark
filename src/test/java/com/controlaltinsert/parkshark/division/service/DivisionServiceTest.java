@@ -56,7 +56,7 @@ class DivisionServiceTest {
         divisionMapper = new DivisionMapper(employeeMapper);
 
         employeeRepository = Mockito.mock(EmployeeRepository.class);
-        employeeService = new EmployeeService(employeeRepository);
+        employeeService = new EmployeeService(employeeMapper,employeeRepository);
 
         divisionRepository = Mockito.mock(DivisionRepository.class);
         divisionService = new DivisionService(divisionRepository, divisionMapper, employeeService);
@@ -72,7 +72,7 @@ class DivisionServiceTest {
         EmployeeDTO directorDTO = employeeMapper.toDTO(director);
         CreateDivisionDTO expectedDTO = new CreateDivisionDTO(name, originalName, directorDTO.getId(), 0);
 
-        Division expected = divisionMapper.toEntity(expectedDTO, director);
+        Division expected = divisionMapper.toEntity(expectedDTO, directorDTO);
 
         DivisionDTO divisionDTO = divisionMapper.toDTO(expected);
         divisionDTO.setId(id);
