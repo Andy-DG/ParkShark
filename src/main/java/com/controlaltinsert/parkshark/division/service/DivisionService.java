@@ -37,7 +37,7 @@ public class DivisionService {
     }
 
     private void validateSubDivision(Division headDivisionById) {
-        if (headDivisionById.getHeadDivisionId() != 0) {
+        if (headDivisionById.getFkHeadDivisionId() != 0) {
             String errorMessage = "Target head division is a subdivision";
             divisionLogger.error(errorMessage);
             throw new IllegalStateException(errorMessage);

@@ -20,7 +20,7 @@ public class DivisionMapper {
     }
 
     public DivisionDTO toDTO(Division division) {
-        return new DivisionDTO(division.getId(), division.getName(), division.getOriginalName(), employeeMapper.toDTO(division.getDirector()), division.getHeadDivisionId());
+        return new DivisionDTO(division.getId(), division.getName(), division.getOriginalName(), employeeMapper.toDTO(division.getDirector()), division.getFkHeadDivisionId());
     }
 
     public List<DivisionDTO> toDTO(List<Division> divisions) {

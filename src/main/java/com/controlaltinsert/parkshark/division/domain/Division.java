@@ -35,10 +35,10 @@ public class Division {
     private Employee director;
 
     @JoinColumn(name = "fk_head_division_id")
-    private int headDivisionId;
+    private int fkHeadDivisionId;
 
-    public int getHeadDivisionId() {
-        return headDivisionId;
+    public int getFkHeadDivisionId() {
+        return fkHeadDivisionId;
     }
 
     public void setDirector(Employee director) {
@@ -49,12 +49,12 @@ public class Division {
         this.name = Validate.validateString(name, "Division-name");
         this.originalName = Validate.validateString(originalName, "Original division-name");
         this.director = director;
-        this.headDivisionId = 0;
+        this.fkHeadDivisionId = 0;
     }
 
     public Division(String name, String originalName, Employee director, int headDivisionId){
         this(name,originalName,director);
-        this.headDivisionId = headDivisionId;
+        this.fkHeadDivisionId = headDivisionId;
     }
 
     @Override
