@@ -23,12 +23,15 @@ import com.controlaltinsert.parkshark.support.postalcode.domain.PostalCode;
 import com.controlaltinsert.parkshark.support.postalcode.service.PostalCodeMapper;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import org.assertj.core.internal.Integers;
+import org.hibernate.annotations.Source;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -40,15 +43,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 class ParkingLotServiceUnitTest {
     private static int id = 1111111;
-    private Employee contactperson = new Employee("Andy", "Builder",
+    int contactPersonId;
+    private final Employee contactperson = new Employee("Andy", "Builder",
             new Address("Haaistraat", 6, new PostalCode("8000", "Bruhhe")),
             "+32123456789", "", "andy@parkshark.be");
-    private String name = "ParkShark Hasselt";
-    private String originalName = "Parking Hasselt Station";
-    private Employee director = new Employee("Boris", "De Beer",
+    private final String name = "ParkShark Hasselt";
+    private final String originalName = "Parking Hasselt Station";
+    private final Employee director = new Employee("Boris", "De Beer",
             new Address("Nieuwstraat", 1, new PostalCode("1000", "Brussel")),
             "", "+32123456789", "boris.debeer@parkshark.be");
-    private Division division = new Division(name, originalName, director, 0);
+    private final Division division = new Division(name, originalName, director, 0);
 
     private PostalCodeMapper postalCodeMapper;
     private AddressMapper addressMapper;
@@ -65,10 +69,9 @@ class ParkingLotServiceUnitTest {
 
     private ParkingLotRepository parkingLotRepository;
     private ParkingLotService parkingLotService;
-    private EmployeeDTO contactpersonDTO;
+    private EmployeeDTO contactPersonDTO;
 
     DivisionDTO divisionDTO;
-
 
     @BeforeEach
     void setUp() {
@@ -89,10 +92,12 @@ class ParkingLotServiceUnitTest {
 
         PostalCodeDTO postalCodeDTO = new PostalCodeDTO("E1000", "Edingburg");
         AddressDTO addressDTO = new AddressDTO("RockLane", 15, postalCodeDTO);
-        contactpersonDTO = new EmployeeDTO(15, "Hugh", "Mungus",
+        contactPersonDTO = new EmployeeDTO(15, "Hugh", "Mungus",
                 addressDTO,
                 "+3214778090", "+40478889945", "hugh@mungus.be");
         divisionDTO = divisionMapper.toDTO(division);
+
+        contactPersonId = contactperson.getId();
     }
 
     @Test
@@ -103,10 +108,10 @@ class ParkingLotServiceUnitTest {
                 .maxCapacity(150)
                 .pricePerHour(4.20)
                 .category(Category.UNDERGROUND)
-                .contactPersonId(contactperson.getId())
+                .contactPersonId(contactPersonId)
                 .build();
 
-        ParkingLot returnedParkingLot = this.parkingLotMapper.toEntity(createParkingLotDTO, contactpersonDTO, divisionDTO);
+        ParkingLot returnedParkingLot = this.parkingLotMapper.toEntity(createParkingLotDTO, contactPersonDTO, divisionDTO);
         ParkingLotDTO lotDTO = this.parkingLotMapper.toDTO(returnedParkingLot);
         lotDTO.setId(id);
 
@@ -147,7 +152,8 @@ class ParkingLotServiceUnitTest {
                 .maxCapacity(150)
                 .pricePerHour(4.20)
                 .category(Category.UNDERGROUND)
-                .contactPersonId(contactperson.getId())
+                .contactPersonId(contactPersonId)
+                .divisionId(division.getId())
                 .build();
 
         assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO));
@@ -161,13 +167,15 @@ class ParkingLotServiceUnitTest {
                 .maxCapacity(-1)
                 .pricePerHour(4.20)
                 .category(Category.UNDERGROUND)
-                .contactPersonId(contactperson.getId())
+                .contactPersonId(contactPersonId)
+                .divisionId(division.getId())
                 .build();
 
         assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO));
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(doubles = {0,-1,-0.0001,-500})
     @DisplayName("given a CreateParkingLotDTO with price per hour of zero or less then throw IllegalArgumentException")
     void givenACreateParkingLotDtoWithPricePerHourOfZeroOrLessThenThrowIllegalArgumentException() {
         CreateParkingLotDTO createParkingLotDTO = CreateParkingLotDTO.builder()
@@ -175,7 +183,8 @@ class ParkingLotServiceUnitTest {
                 .maxCapacity(10)
                 .pricePerHour(0)
                 .category(Category.UNDERGROUND)
-                .contactPersonId(contactperson.getId())
+                .contactPersonId(contactPersonId)
+                .divisionId(division.getId())
                 .build();
 
         assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO));
@@ -189,7 +198,8 @@ class ParkingLotServiceUnitTest {
                 .maxCapacity(0)
                 .pricePerHour(4.20)
                 .category(null)
-                .contactPersonId(contactperson.getId())
+                .contactPersonId(contactPersonId)
+                .divisionId(division.getId())
                 .build();
 
         assertThrows(IllegalArgumentException.class, () -> this.parkingLotService.createParkingLot(createParkingLotDTO));

@@ -23,11 +23,11 @@ public class EmployeeService {
 
     public EmployeeDTO getEmployeeById(int directorId) {
         Employee director = employeeRepository.findById(directorId).orElse(null);
-        assertDirectorExists(director);
+        assertEmployeeExists(director);
         return employeeMapper.toDTO(director);
     }
 
-    private void assertDirectorExists(Employee director) {
+    private void assertEmployeeExists(Employee director) {
         if (director == null) {
             String errorMessage = "Employee not found!";
             employeeServiceLogger.error(errorMessage);
