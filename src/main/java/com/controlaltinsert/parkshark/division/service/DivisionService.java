@@ -62,10 +62,10 @@ public class DivisionService {
         return divisionMapper.toDTO(division);
     }
 
-    public Division getDivisionById(int divisionId) {
+    public DivisionDTO getDivisionById(int divisionId) {
         Division division = divisionRepository.findById(divisionId).orElse(null);
         assertDivisionExists(division);
-        return division;
+        return divisionMapper.toDTO(division);
     }
 
     private void assertDivisionExists(Division division) {

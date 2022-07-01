@@ -48,8 +48,7 @@ public class ParkingLotService {
     public ParkingLotDTO getParkingLotById(int parkingLotId) {
         ParkingLot parkingLot = parkingLotRepository.findById(parkingLotId).orElse(null);
         assertParkingLotExists(parkingLot);
-        ParkingLotDTO parkingLotDTO = parkingLotMapper.toDTO(parkingLot);
-        return parkingLotDTO;
+        return parkingLotMapper.toDTO(parkingLot);
     }
 
     private void assertParkingLotExists(ParkingLot parkingLot) {

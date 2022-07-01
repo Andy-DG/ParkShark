@@ -3,6 +3,7 @@ package com.controlaltinsert.parkshark.division.api;
 import com.controlaltinsert.parkshark.division.api.dto.CreateDivisionDTO;
 import com.controlaltinsert.parkshark.division.api.dto.DivisionDTO;
 import com.controlaltinsert.parkshark.division.service.DivisionService;
+import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotDTO;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotListDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,12 @@ private DivisionService divisionService;
             return this.divisionService.createDivision(divisionDTO);
         }
         return this.divisionService.createDivision(divisionDTO);
+    }
+
+    @GetMapping(path = "/{id}", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public DivisionDTO getParkingLot(@PathVariable int id){
+        return this.divisionService.getDivisionById(id);
     }
 
     @GetMapping()
