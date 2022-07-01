@@ -24,10 +24,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.persistence.Access;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ExtendWith(MockitoExtension.class)
@@ -56,33 +53,25 @@ class DivisionServiceTest {
         divisionMapper = new DivisionMapper(employeeMapper);
 
         employeeRepository = Mockito.mock(EmployeeRepository.class);
-        employeeService = new EmployeeService(employeeMapper,employeeRepository);
+        employeeService = new EmployeeService(employeeMapper, employeeRepository);
 
         divisionRepository = Mockito.mock(DivisionRepository.class);
         divisionService = new DivisionService(divisionRepository, divisionMapper, employeeService);
-
     }
 
     @Test
     @DisplayName("given a division service, when creating a new division, the division exists")
     void givenADivisionServiceWhenCreatingANewDivisionTheDivisionExists() {
-
         //given
         divisionService = Mockito.mock(DivisionService.class);
         EmployeeDTO directorDTO = employeeMapper.toDTO(director);
         CreateDivisionDTO expectedDTO = new CreateDivisionDTO(name, originalName, directorDTO.getId(), 0);
-
         Division expected = divisionMapper.toEntity(expectedDTO, directorDTO);
-
         DivisionDTO divisionDTO = divisionMapper.toDTO(expected);
         divisionDTO.setId(id);
-
         Mockito.when(divisionService.createDivision(expectedDTO)).thenReturn(divisionDTO);
-
         //when
         DivisionDTO actual = divisionService.createDivision(expectedDTO);
-
-
         //then
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getOriginalName(), actual.getOriginalName());
@@ -94,7 +83,6 @@ class DivisionServiceTest {
     @NullAndEmptySource
     @DisplayName("given a division to create with an empty or null name when creating new division then throw illegal argument exception")
     void givenADivisionToCreateWithAnEmptyOrNullNameWhenCreatingNewDivisionThenThrowIllegalArgumentException(String nullAndEmpty) {
-
         //given
         name = nullAndEmpty;
         CreateDivisionDTO createDivisionDTO = new CreateDivisionDTO(name, originalName, director.getId());
@@ -104,8 +92,32 @@ class DivisionServiceTest {
 
         //then
         assertThrows(IllegalArgumentException.class, () -> divisionService.createDivision(createDivisionDTO));
+    }
 
+    @Test
+    @DisplayName("when creating a new division without specifying the head division, the head division id is zero")
+    void whenCreatingANewDivisionWithoutSpecifyingTheHeadDivisionTheHeadDivisionIdIsZero() {
+
+        //given
+
+        //when
+        Division division = new Division(name,originalName,director);
+
+        //then
+        assertEquals(0,division.getFkHeadDivisionId());
 
     }
 
+    @Test
+    @DisplayName("given a division and a subdivision, when creating a new subdivision of that subdivision then an exception is thrown")
+    void givenADivisionAndASubdivisionWhenCreatingANewSubdivisionOfThatSubdivisionThenAnExceptionIsThrown() {
+        //given
+        Division headDivision = new Division(name,originalName,director);
+        Division subDivision = new Division("subdivision","original name", director, headDivision.getId());
+        //when
+        CreateDivisionDTO subSubDivision = new CreateDivisionDTO("subSub","original",director.getId(),subDivision.getId());
+        //then
+        assertThrows(IllegalArgumentException.class, () -> divisionService.createDivision(subSubDivision));
+
+    }
 }

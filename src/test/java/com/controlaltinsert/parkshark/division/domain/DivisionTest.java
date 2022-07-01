@@ -27,4 +27,16 @@ class DivisionTest {
         assertThrows(IllegalArgumentException.class, () -> new Division(nullAndEmpty, originalName, director,0));
     }
 
+    @Test
+    @DisplayName("given a division, when creating a subdivision, then they are related by ID")
+    void givenADivisionWhenCreatingASubdivisionThenTheyAreRelatedById() {
+
+        //given
+        Division headDivision = new Division(name,originalName,director);
+        //when
+        Division actual = new Division("name","Original Name", director,headDivision.getId());
+        //then
+        assertEquals(headDivision.getId(),actual.getFkHeadDivisionId());
+    }
+
 }

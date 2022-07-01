@@ -47,7 +47,7 @@ public class DivisionService {
 
     private void isNotNull(Division headDivisionById) {
         if (headDivisionById == null) {
-            String message = "This head division doesn't exist. Creating normal division instead";
+            String message = "This head division doesn't exist.";
             divisionLogger.error(message);
             throw new IllegalArgumentException(message);
         }
