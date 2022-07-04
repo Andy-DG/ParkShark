@@ -1,7 +1,7 @@
 package com.controlaltinsert.parkshark.member.api.dto;
 
 import com.controlaltinsert.parkshark.member.level.domain.MembershipLevel;
-import com.controlaltinsert.parkshark.support.address.api.AddressDTO;
+import com.controlaltinsert.parkshark.support.address.api.CreateAddressDTO;
 import com.controlaltinsert.parkshark.support.licenseplate.api.CreateLicensePlateDTO;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,9 +21,9 @@ public class CreateMemberDTO {
     String mobile;
     String phone;
     String email;
-    AddressDTO addressDTO;
+    CreateAddressDTO createAddressDTO;
     LocalDate registrationDate;
-    CreateLicensePlateDTO licensePlateDTO;
+    CreateLicensePlateDTO createLicensePlateDTO;
     MembershipLevel membershipLevel;
 
 }

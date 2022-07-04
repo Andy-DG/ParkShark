@@ -3,8 +3,10 @@ package com.controlaltinsert.parkshark.member.service;
 import com.controlaltinsert.parkshark.member.api.dto.CreateMemberDTO;
 import com.controlaltinsert.parkshark.member.api.dto.MemberDTO;
 import com.controlaltinsert.parkshark.member.domain.Member;
+import com.controlaltinsert.parkshark.support.address.api.AddressDTO;
 import com.controlaltinsert.parkshark.support.address.domain.Address;
 import com.controlaltinsert.parkshark.support.address.service.AddressMapper;
+import com.controlaltinsert.parkshark.support.licenseplate.api.LicensePlateDTO;
 import com.controlaltinsert.parkshark.support.licenseplate.domain.LicensePlate;
 import com.controlaltinsert.parkshark.support.licenseplate.service.LicensePlateMapper;
 import lombok.AccessLevel;
@@ -23,19 +25,29 @@ public class MemberMapper {
     AddressMapper addressMapper;
 
     public Member toEntity(CreateMemberDTO createMemberDTO) {
-        LicensePlate licensePlate = licensePlateMapper.toEntity(createMemberDTO.getLicensePlateDTO());
-        Address address = addressMapper.toEntity(createMemberDTO.getAddressDTO());
-
         return new Member(
                 createMemberDTO.getFirstName(),
                 createMemberDTO.getLastName(),
                 createMemberDTO.getMobile(),
                 createMemberDTO.getPhone(),
                 createMemberDTO.getEmail(),
-                address,
+                addressMapper.toEntity(createMemberDTO.getCreateAddressDTO()),
                 createMemberDTO.getRegistrationDate(),
-                licensePlate,
+                licensePlateMapper.toEntity(createMemberDTO.getCreateLicensePlateDTO()),
                 createMemberDTO.getMembershipLevel());
+    }
+
+    public Member toEntity(MemberDTO memberDTO) {
+        return new Member(
+                memberDTO.getFirstName(),
+                memberDTO.getLastName(),
+                memberDTO.getMobile(),
+                memberDTO.getPhone(),
+                memberDTO.getEmail(),
+                addressMapper.toEntity(memberDTO.getAddressDTO()),
+                memberDTO.getRegistrationDate(),
+                licensePlateMapper.toEntity(memberDTO.getLicensePlateDTO()),
+                memberDTO.getMembershipLevel());
     }
 
     public MemberDTO toDTO(Member member) {
@@ -46,13 +58,13 @@ public class MemberMapper {
                 member.getMobile(),
                 member.getPhone(),
                 member.getEmail(),
-                member.getAddress().getId(),
+                addressMapper.toDTO(member.getAddress()),
                 member.getRegistrationDate(),
-                member.getLicensePlate(),
+                licensePlateMapper.toDTO(member.getLicensePlate()),
                 member.getFkMembershipLevelId());
     }
 
     public List<MemberDTO> toDTO(List<Member> members) {
-        return members.stream().map(this::toDTO).collect(Collectors.toList());
+        return members.stream().map(this::toDTO).toList();
     }
 }

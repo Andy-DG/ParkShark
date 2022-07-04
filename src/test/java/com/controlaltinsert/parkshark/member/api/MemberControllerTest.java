@@ -7,7 +7,7 @@ import com.controlaltinsert.parkshark.member.domain.MemberRepository;
 import com.controlaltinsert.parkshark.member.level.domain.MembershipLevel;
 import com.controlaltinsert.parkshark.member.service.MemberMapper;
 import com.controlaltinsert.parkshark.member.service.MemberService;
-import com.controlaltinsert.parkshark.support.address.api.AddressDTO;
+import com.controlaltinsert.parkshark.support.address.api.CreateAddressDTO;
 import com.controlaltinsert.parkshark.support.address.domain.Address;
 import com.controlaltinsert.parkshark.support.address.service.AddressMapper;
 import com.controlaltinsert.parkshark.support.licenseplate.api.CreateLicensePlateDTO;
@@ -18,7 +18,6 @@ import com.controlaltinsert.parkshark.support.postalcode.domain.PostalCode;
 import com.controlaltinsert.parkshark.support.postalcode.service.PostalCodeMapper;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -58,10 +57,10 @@ class MemberControllerTest {
     @Test
     @DisplayName("given a proper CreateMemberDTO when adding a new member then successfully create member")
     void givenAProperCreateMemberDtoWhenAddingANewMemberThenSuccessfullyCreateMember() {
-        AddressDTO addressDTO = new AddressDTO("west", 17, new PostalCodeDTO("98101", "Seattle"));
+        CreateAddressDTO createAddressDTO = new CreateAddressDTO("west", 17, new PostalCodeDTO("98101", "Seattle"));
         CreateLicensePlateDTO createLicensePlateDTO = new CreateLicensePlateDTO("XFILES", "USA");
         CreateMemberDTO newMember = new CreateMemberDTO("John", "Doe", "+111 636 856 789",
-                "+111 636 856 789", "jdoe@mail.com", addressDTO, LocalDate.now(), createLicensePlateDTO, MembershipLevel.BRONZE);
+                "+111 636 856 789", "jdoe@mail.com", createAddressDTO, LocalDate.now(), createLicensePlateDTO, MembershipLevel.BRONZE);
 
         Member entity = memberMapper.toEntity(newMember);
         Mockito.when(memberRepository.save(entity)).thenReturn(entity);
@@ -82,9 +81,9 @@ class MemberControllerTest {
     @Test
     @DisplayName("given a proper member but without a mobile when creating a member then succesfully create new member")
     void givenAProperMemberButWithoutAMobileWhenCreatingAMemberThenSuccesfullyCreateNewMember() {
-        AddressDTO addressDTO = new AddressDTO("west", 17, new PostalCodeDTO("98101", "Seattle"));
+        CreateAddressDTO createAddressDTO = new CreateAddressDTO("west", 17, new PostalCodeDTO("98101", "Seattle"));
         CreateLicensePlateDTO createLicensePlateDTO = new CreateLicensePlateDTO("XFILES", "USA");
-        CreateMemberDTO newMember = new CreateMemberDTO("John", "Doe", "", "+111 636 856 789", "jdoe@mail.com", addressDTO, LocalDate.now(), createLicensePlateDTO, MembershipLevel.BRONZE);
+        CreateMemberDTO newMember = new CreateMemberDTO("John", "Doe", "", "+111 636 856 789", "jdoe@mail.com", createAddressDTO, LocalDate.now(), createLicensePlateDTO, MembershipLevel.BRONZE);
 
         Member entity = memberMapper.toEntity(newMember);
         Mockito.when(memberRepository.save(entity)).thenReturn(entity);
@@ -106,9 +105,9 @@ class MemberControllerTest {
     @Test
     @DisplayName("Given a member but without a phone number when creating then success")
     void givenAMemberButWithoutAPhoneNumberWhenCreatingThenSuccess() {
-        AddressDTO addressDTO = new AddressDTO("west", 17, new PostalCodeDTO("98101", "Seattle"));
+        CreateAddressDTO createAddressDTO = new CreateAddressDTO("west", 17, new PostalCodeDTO("98101", "Seattle"));
         CreateLicensePlateDTO createLicensePlateDTO = new CreateLicensePlateDTO("XFILES", "USA");
-        CreateMemberDTO newMember = new CreateMemberDTO("John", "Doe", "+111 636 856 789", "", "jdoe@mail.com", addressDTO, LocalDate.now(), createLicensePlateDTO, MembershipLevel.BRONZE);
+        CreateMemberDTO newMember = new CreateMemberDTO("John", "Doe", "+111 636 856 789", "", "jdoe@mail.com", createAddressDTO, LocalDate.now(), createLicensePlateDTO, MembershipLevel.BRONZE);
 
         Member entity = memberMapper.toEntity(newMember);
         Mockito.when(memberRepository.save(entity)).thenReturn(entity);
@@ -129,9 +128,9 @@ class MemberControllerTest {
     @Test
     @DisplayName("Given a member with a phonenumber that is incorrect then throw exception")
     void givenAMemberWithAPhonenumberThatIsIncorrectThenThrowException() {
-        AddressDTO addressDTO = new AddressDTO("west", 17, new PostalCodeDTO("98101", "Seattle"));
+        CreateAddressDTO createAddressDTO = new CreateAddressDTO("west", 17, new PostalCodeDTO("98101", "Seattle"));
         CreateLicensePlateDTO createLicensePlateDTO = new CreateLicensePlateDTO("XFILES", "USA");
-        CreateMemberDTO newMember = new CreateMemberDTO("John", "Doe", "+111 636 856 789", "+119", "jdoe@mail.com", addressDTO, LocalDate.now(), createLicensePlateDTO, MembershipLevel.BRONZE);
+        CreateMemberDTO newMember = new CreateMemberDTO("John", "Doe", "+111 636 856 789", "+119", "jdoe@mail.com", createAddressDTO, LocalDate.now(), createLicensePlateDTO, MembershipLevel.BRONZE);
 
         assertThrows(IllegalArgumentException.class, () -> this.memberController.createMember(newMember));
     }
@@ -139,9 +138,9 @@ class MemberControllerTest {
     @Test
     @DisplayName("Given a member with a mobileNumber that is incorrect then throw exception")
     void givenAMemberWithAMobileNumberThatIsIncorrectThenThrowException() {
-        AddressDTO addressDTO = new AddressDTO("west", 17, new PostalCodeDTO("98101", "Seattle"));
+        CreateAddressDTO createAddressDTO = new CreateAddressDTO("west", 17, new PostalCodeDTO("98101", "Seattle"));
         CreateLicensePlateDTO createLicensePlateDTO = new CreateLicensePlateDTO("XFILES", "USA");
-        CreateMemberDTO newMember = new CreateMemberDTO("John", "Doe", "+111 689", "+111 636 856 789", "jdoe@mail.com", addressDTO, LocalDate.now(), createLicensePlateDTO, MembershipLevel.BRONZE);
+        CreateMemberDTO newMember = new CreateMemberDTO("John", "Doe", "+111 689", "+111 636 856 789", "jdoe@mail.com", createAddressDTO, LocalDate.now(), createLicensePlateDTO, MembershipLevel.BRONZE);
 
         assertThrows(IllegalArgumentException.class, () -> this.memberController.createMember(newMember));
     }
@@ -149,9 +148,9 @@ class MemberControllerTest {
     @Test
     @DisplayName("Given a member with no lastName when creating a member then throw Exception")
     void givenAMemberWithNoLastNameWhenCreatingAMemberThenThrowException() {
-        AddressDTO addressDTO = new AddressDTO("west", 17, new PostalCodeDTO("98101", "Seattle"));
+        CreateAddressDTO createAddressDTO = new CreateAddressDTO("west", 17, new PostalCodeDTO("98101", "Seattle"));
         CreateLicensePlateDTO createLicensePlateDTO = new CreateLicensePlateDTO("XFILES", "USA");
-        CreateMemberDTO newMember = new CreateMemberDTO("John", " ", "+111 636 856 789", "+111 636 856 789", "jdoe@mail.com", addressDTO, LocalDate.now(), createLicensePlateDTO, MembershipLevel.BRONZE);
+        CreateMemberDTO newMember = new CreateMemberDTO("John", " ", "+111 636 856 789", "+111 636 856 789", "jdoe@mail.com", createAddressDTO, LocalDate.now(), createLicensePlateDTO, MembershipLevel.BRONZE);
 
         assertThrows(IllegalArgumentException.class, () -> this.memberController.createMember(newMember));
     }
@@ -194,10 +193,10 @@ class MemberControllerTest {
     @Test
     @DisplayName("when creating a member with a null level then set level to bronze")
     void whenCreatingAMemberWithANullLevelThenSetLevelToBronze() {
-        AddressDTO addressDTO = new AddressDTO("west", 17, new PostalCodeDTO("98101", "Seattle"));
+        CreateAddressDTO createAddressDTO = new CreateAddressDTO("west", 17, new PostalCodeDTO("98101", "Seattle"));
         CreateLicensePlateDTO createLicensePlateDTO = new CreateLicensePlateDTO("XFILES", "USA");
         CreateMemberDTO createMemberDTOBadLevel = new CreateMemberDTO("John", "Doe", "+111 636 856 789",
-                "+111 636 856 789", "jdoe@mail.com", addressDTO, LocalDate.now(), createLicensePlateDTO, null);
+                "+111 636 856 789", "jdoe@mail.com", createAddressDTO, LocalDate.now(), createLicensePlateDTO, null);
         MemberDTO member = memberService.createMember(createMemberDTOBadLevel);
 
         assertEquals(MembershipLevel.BRONZE, member.getMembershipLevel());

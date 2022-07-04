@@ -29,13 +29,13 @@ public class DivisionService {
     public DivisionDTO createDivision(CreateDivisionDTO divisionDTO) {
         int headDivisionId = divisionDTO.getHeadDivisionId();
         Division headDivisionById = divisionRepository.findById(headDivisionId).orElse(null);
-        Validate.objectNotNull(headDivisionById, "This head division doesn't exist.");
         validateSubDivision(headDivisionById);
         Division division = divisionRepository.save(getEntity(divisionDTO));
         return getDTO(division);
     }
 
     private void validateSubDivision(Division headDivisionById) {
+        Validate.objectNotNull(headDivisionById, "This head division doesn't exist.");
         if (headDivisionById.getFkHeadDivisionId() != 0) {
             String errorMessage = "Target head division is a subdivision";
             divisionLogger.error(errorMessage);

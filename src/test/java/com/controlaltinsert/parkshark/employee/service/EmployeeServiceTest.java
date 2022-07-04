@@ -1,12 +1,9 @@
 package com.controlaltinsert.parkshark.employee.service;
 
-import com.controlaltinsert.parkshark.division.domain.DivisionRepository;
-import com.controlaltinsert.parkshark.division.service.DivisionMapper;
-import com.controlaltinsert.parkshark.division.service.DivisionService;
 import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
 import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.employee.domain.EmployeeRepository;
-import com.controlaltinsert.parkshark.support.address.api.AddressDTO;
+import com.controlaltinsert.parkshark.support.address.api.CreateAddressDTO;
 import com.controlaltinsert.parkshark.support.address.domain.Address;
 import com.controlaltinsert.parkshark.support.address.service.AddressMapper;
 import com.controlaltinsert.parkshark.support.postalcode.domain.PostalCode;
@@ -52,7 +49,7 @@ class EmployeeServiceTest {
                 address,
                 mobilePhoneNumber, phoneNumber,
                 email);
-        AddressDTO addressDTO = addressMapper.toDTO(address);
+        CreateAddressDTO createAddressDTO = addressMapper.toDTO(address);
         //when
         Mockito.when(employeeRepository.findById(employee.getId())).thenReturn(Optional.of(employee));
         EmployeeDTO actual = employeeService.getEmployeeById(employee.getId());
@@ -60,7 +57,7 @@ class EmployeeServiceTest {
 
         EmployeeDTO expected = new EmployeeDTO(employee.getId(),
                 "Business", "Boy",
-                addressDTO,
+                createAddressDTO,
                 phoneNumber,mobilePhoneNumber,
                 email);
         assertEquals(expected,actual);

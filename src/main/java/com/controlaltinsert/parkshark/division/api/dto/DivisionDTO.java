@@ -17,12 +17,12 @@ public class DivisionDTO {
 
     private  String originalName;
 
-    private  EmployeeDTO director;
+    private  EmployeeDTO directorDTO;
 
     private int headDivisionId;
 
     public int getDirectorId() {
-        return director.getId();
+        return directorDTO.getId();
     }
 
 }

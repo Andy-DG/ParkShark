@@ -19,6 +19,6 @@ public class ParkingLotDTO {
     private Category category;
     private int maxCapacity;
     private double pricePerHour;
-    private EmployeeDTO contactPerson;
+    private EmployeeDTO contactPersonDTO;
     private DivisionDTO divisionDTO;
 }

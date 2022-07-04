@@ -29,7 +29,17 @@ public class ParkingLotMapper {
                 , createParkingLotDTO.getMaxCapacity()
                 , createParkingLotDTO.getPricePerHour()
                 , employeeMapper.toEntity(contactPersonDTO)
-                , divisionMapper.toEntity(divisionDTO, divisionDTO.getDirector()));
+                , divisionMapper.toEntity(divisionDTO));
+    }
+
+    public ParkingLot toEntity(ParkingLotDTO parkingLotDTO) {
+        return new ParkingLot(
+                parkingLotDTO.getName()
+                , parkingLotDTO.getCategory()
+                , parkingLotDTO.getMaxCapacity()
+                , parkingLotDTO.getPricePerHour()
+                , employeeMapper.toEntity(parkingLotDTO.getContactPersonDTO())
+                , divisionMapper.toEntity(parkingLotDTO.getDivisionDTO()));
     }
 
     public ParkingLotDTO toDTO(ParkingLot parkingLot) {

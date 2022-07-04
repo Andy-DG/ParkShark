@@ -95,6 +95,6 @@ class ParkingLotControllerIntegrationTest {
                 .extract().as(ParkingLotDTO[].class));
 
         Assertions.assertThat(actualparkingLots).extracting(ParkingLotDTO::getName).contains("SharkLot");
-        Assertions.assertThat(actualparkingLots).extracting(parkingLotDTO -> parkingLotDTO.getContactPerson().getEmail()).contains("andy@shark.com");
+        Assertions.assertThat(actualparkingLots).extracting(parkingLotDTO -> parkingLotDTO.getContactPersonDTO().getEmail()).contains("andy@shark.com");
     }
 }

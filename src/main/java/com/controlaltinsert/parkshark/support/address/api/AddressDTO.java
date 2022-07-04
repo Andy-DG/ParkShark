@@ -1,18 +1,17 @@
 package com.controlaltinsert.parkshark.support.address.api;
 
 import com.controlaltinsert.parkshark.support.postalcode.api.PostalCodeDTO;
-import com.controlaltinsert.parkshark.support.postalcode.domain.PostalCode;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class AddressDTO {
-    private String streetName;
-    private int streetNumber;
-    private PostalCodeDTO postalCodeDTO;
+    int id;
+    String streetName;
+    int streetNumber;
+    PostalCodeDTO postalCodeDTO;
 }

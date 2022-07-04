@@ -1,6 +1,9 @@
 package com.controlaltinsert.parkshark.member.api.dto;
 
 import com.controlaltinsert.parkshark.member.level.domain.MembershipLevel;
+import com.controlaltinsert.parkshark.support.address.api.AddressDTO;
+import com.controlaltinsert.parkshark.support.address.domain.Address;
+import com.controlaltinsert.parkshark.support.licenseplate.api.LicensePlateDTO;
 import com.controlaltinsert.parkshark.support.licenseplate.domain.LicensePlate;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -22,9 +25,9 @@ public class MemberDTO {
     String mobile;
     String phone;
     String email;
-    int fk_address_id;
+    AddressDTO addressDTO;
     LocalDate registrationDate;
-    LicensePlate licensePlate;
+    LicensePlateDTO licensePlateDTO;
     MembershipLevel membershipLevel;
 
     @Override

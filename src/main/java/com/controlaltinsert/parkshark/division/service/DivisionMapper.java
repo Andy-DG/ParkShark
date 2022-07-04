@@ -23,11 +23,11 @@ public class DivisionMapper {
                 createDivisionDTO.getHeadDivisionId());
     }
 
-    public Division toEntity(DivisionDTO divisionDTO, EmployeeDTO directorDTO) {
+    public Division toEntity(DivisionDTO divisionDTO) {
         return new Division(
                 divisionDTO.getName(),
                 divisionDTO.getOriginalName(),
-                employeeMapper.toEntity(directorDTO),
+                employeeMapper.toEntity(divisionDTO.getDirectorDTO()),
                 divisionDTO.getHeadDivisionId());
     }
 

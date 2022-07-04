@@ -1,6 +1,6 @@
 package com.controlaltinsert.parkshark.employee.api;
 
-import com.controlaltinsert.parkshark.support.address.api.AddressDTO;
+import com.controlaltinsert.parkshark.support.address.api.CreateAddressDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import lombok.Data;
 public class CreateEmployeeDTO {
     private String firstName;
     private String lastName;
-    private AddressDTO address;
+    private CreateAddressDTO address;
     private String phoneNumber;
     private String mobilePhoneNumber;
     private String email;

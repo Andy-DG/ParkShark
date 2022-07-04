@@ -15,7 +15,7 @@ import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotDTO;
 import com.controlaltinsert.parkshark.parkinglot.domain.Category;
 import com.controlaltinsert.parkshark.parkinglot.domain.ParkingLot;
 import com.controlaltinsert.parkshark.parkinglot.domain.ParkingLotRepository;
-import com.controlaltinsert.parkshark.support.address.api.AddressDTO;
+import com.controlaltinsert.parkshark.support.address.api.CreateAddressDTO;
 import com.controlaltinsert.parkshark.support.address.domain.Address;
 import com.controlaltinsert.parkshark.support.address.service.AddressMapper;
 import com.controlaltinsert.parkshark.support.postalcode.api.PostalCodeDTO;
@@ -23,8 +23,6 @@ import com.controlaltinsert.parkshark.support.postalcode.domain.PostalCode;
 import com.controlaltinsert.parkshark.support.postalcode.service.PostalCodeMapper;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import org.assertj.core.internal.Integers;
-import org.hibernate.annotations.Source;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -95,13 +93,13 @@ class ParkingLotServiceUnitTest {
         parkingLotService = new ParkingLotService(parkingLotMapper, parkingLotRepository, employeeService, divisionService);
 
         PostalCodeDTO postalCodeDTO = new PostalCodeDTO("E1000", "Edingburg");
-        AddressDTO addressDTO = new AddressDTO("RockLane", 15, postalCodeDTO);
+        CreateAddressDTO createAddressDTO = new CreateAddressDTO("RockLane", 15, postalCodeDTO);
 
         contactPersonId = contactperson.getId();
         divisionId = division.getId();
 
         contactPersonDTO = new EmployeeDTO(contactPersonId, "Hugh", "Mungus",
-                addressDTO,
+                createAddressDTO,
                 "+3214778090", "+40478889945", "hugh@mungus.be");
         divisionDTO = divisionMapper.toDTO(division);
 
@@ -133,7 +131,7 @@ class ParkingLotServiceUnitTest {
         assertEquals(createParkingLotDTO.getMaxCapacity(), actual.getMaxCapacity());
         assertEquals(createParkingLotDTO.getCategory(), actual.getCategory());
         assertEquals(createParkingLotDTO.getPricePerHour(), actual.getPricePerHour());
-        assertEquals(createParkingLotDTO.getContactPersonId(), actual.getContactPerson().getId());
+        assertEquals(createParkingLotDTO.getContactPersonId(), actual.getContactPersonDTO().getId());
     }
 
     @ParameterizedTest

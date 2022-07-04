@@ -2,6 +2,7 @@ package com.controlaltinsert.parkshark.support.address.domain;
 
 import com.controlaltinsert.parkshark.support.postalcode.domain.PostalCode;
 import com.controlaltinsert.parkshark.util.Validate;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "address", schema = "parkshark")
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class Address {

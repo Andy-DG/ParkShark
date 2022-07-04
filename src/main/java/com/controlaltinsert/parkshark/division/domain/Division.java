@@ -34,7 +34,7 @@ public class Division {
     @JoinColumn(name = "fk_director_id")
     private Employee director;
 
-    @JoinColumn(name = "fk_head_division_id")
+    @Column(name = "fk_head_division_id")
     private int fkHeadDivisionId;
 
     public int getFkHeadDivisionId() {
@@ -52,9 +52,9 @@ public class Division {
         this.fkHeadDivisionId = 0;
     }
 
-    public Division(String name, String originalName, Employee director, int headDivisionId){
+    public Division(String name, String originalName, Employee director, int fkHeadDivisionId){
         this(name,originalName,director);
-        this.fkHeadDivisionId = headDivisionId;
+        this.fkHeadDivisionId = fkHeadDivisionId;
     }
 
     @Override
