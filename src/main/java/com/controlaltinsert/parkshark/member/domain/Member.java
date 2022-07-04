@@ -44,14 +44,14 @@ public class Member {
     @Column(name = "email")
     String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "fk_address_id")
     Address address;
 
     @Column(name = "registration_date")
     LocalDate registrationDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "fk_license_plate_id")
     LicensePlate licensePlate;
 

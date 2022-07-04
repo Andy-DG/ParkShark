@@ -27,7 +27,7 @@ public class EmployeeMapper {
         return new Employee(
                 employeeDTO.getFirstName(),
                 employeeDTO.getLastName(),
-                addressMapper.toEntity(employeeDTO.getAddress()),
+                addressMapper.toEntity(employeeDTO.getAddressDTO()),
                 employeeDTO.getPhoneNumber(),
                 employeeDTO.getMobilePhoneNumber(),
                 employeeDTO.getEmail());

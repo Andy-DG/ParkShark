@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
+
 
 @Entity
 @Table(name = "allocation", schema = "parkshark")
@@ -36,24 +36,24 @@ public class Allocation {
     @JoinColumn(name = "fk_member_id")
     Member member;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_license_plate")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "fk_license_plate_id")
     LicensePlate licensePlate;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_parking_lot")
+    @JoinColumn(name = "fk_parking_lot_id")
     ParkingLot parkingLot;
 
-    @Column(name = "begin_date")
+    @Column(name = "begin_date", columnDefinition = "DATE")
     LocalDate beginDate;
 
-    @Column(name = "begin_time")
+    @Column(name = "begin_time", columnDefinition = "TIME")
     LocalTime beginTime;
 
-    @Column(name = "end_date")
+    @Column(name = "end_date", columnDefinition = "DATE")
     LocalDate endDate;
 
-    @Column(name = "end_time")
+    @Column(name = "end_time", columnDefinition = "TIME")
     LocalTime endTime;
 
     public Allocation(Member member, LicensePlate licensePlate, ParkingLot parkingLot, LocalDate beginDate, LocalTime beginTime, LocalDate endDate, LocalTime endTime) {

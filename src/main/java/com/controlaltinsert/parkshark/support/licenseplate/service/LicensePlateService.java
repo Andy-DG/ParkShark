@@ -22,7 +22,7 @@ public class LicensePlateService {
 
     public LicensePlateDTO getLicenseById(int licensePlateId) {
             LicensePlate licensePlate = licensePlateRepository.findById(licensePlateId).orElse(null);
-            Validate.objectNotNull(member, "Member not found!");
-            return licensePlateMapper.toDTO(member);
+            Validate.objectNotNull(licensePlate, "License not found!");
+            return licensePlateMapper.toDTO(licensePlate);
     }
 }
