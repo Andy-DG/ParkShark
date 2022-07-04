@@ -16,9 +16,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 public class Address {
-    @Transient
-    private final Logger addressLogger = LoggerFactory.getLogger(Address.class);
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_id_seq")
     @SequenceGenerator(name = "address_id_seq", sequenceName = "address_id_seq", allocationSize = 1)
@@ -42,7 +39,6 @@ public class Address {
 
     public String validateStreetName(String streetName) {
         Validate.validateString(streetName, "Address street name validated successfully");
-        addressLogger.info("Address street name validated successfully");
         return streetName;
 }
 
