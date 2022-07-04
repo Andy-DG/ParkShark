@@ -85,11 +85,14 @@ public class Validate {
     }
 
     public static Address validateAddress(Address address) {
-        if (address == null) {
-            String message = "Address cannot be null";
+        Validate.objectNotNull(address, "Address cannot be empty");
+        return address;
+    }
+
+    public static void objectNotNull(Object object, String message){
+        if(object == null){
             validateLogger.error(message);
             throw new IllegalArgumentException(message);
         }
-        return address;
     }
 }

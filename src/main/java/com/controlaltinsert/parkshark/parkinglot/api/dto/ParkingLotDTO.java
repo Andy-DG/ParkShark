@@ -10,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
+@Data
 public class ParkingLotDTO {
 
     private int id;
@@ -20,61 +21,4 @@ public class ParkingLotDTO {
     private double pricePerHour;
     private EmployeeDTO contactPerson;
     private DivisionDTO divisionDTO;
-
-    public DivisionDTO getDivisionDTO() {
-        return divisionDTO;
-    }
-
-    public void setDivisionDTO(DivisionDTO divisionDTO) {
-        this.divisionDTO = divisionDTO;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public int getMaxCapacity() {
-        return maxCapacity;
-    }
-
-    public void setMaxCapacity(int maxCapacity) {
-        this.maxCapacity = maxCapacity;
-    }
-
-    public double getPricePerHour() {
-        return pricePerHour;
-    }
-
-    public void setPricePerHour(double pricePerHour) {
-        this.pricePerHour = pricePerHour;
-    }
-
-    public EmployeeDTO getContactPerson() {
-        return contactPerson;
-    }
-
-    public void setContactPerson(EmployeeDTO contactPerson) {
-        this.contactPerson = contactPerson;
-    }
-
 }

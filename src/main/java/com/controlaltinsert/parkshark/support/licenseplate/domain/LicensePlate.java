@@ -17,8 +17,8 @@ import java.util.Objects;
 @Getter
 public class LicensePlate {
     @Id
-    @SequenceGenerator(name = "member_id_seq", sequenceName = "member_id_seq", allocationSize = 1)
-    @GeneratedValue(generator = "member_id_seq")
+    @SequenceGenerator(name = "license_plate_id_seq", sequenceName = "license_plate_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "license_plate_id_seq")
     int id;
 
     @Column(name="license_plate_number")

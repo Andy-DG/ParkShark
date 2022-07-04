@@ -50,14 +50,11 @@ public class ParkingLot {
         this.pricePerHour = validatePricePerHour(pricePerHour);
         this.contactPerson = validateEmployee(contactPerson);
         this.division = validateDivision(division);
+        parkingLotLogger.info("Parkinglot: " + name + " is created");
     }
 
     private Division validateDivision(Division division) {
-        if(division == null){
-            String message = "Division cannot be null";
-            parkingLotLogger.error(message);
-            throw new IllegalArgumentException(message);
-        }
+        Validate.objectNotNull(division, "Division does not exist");
         return division;
     }
 
@@ -105,20 +102,12 @@ public class ParkingLot {
     }
 
     private Employee validateEmployee(Employee contactPerson) {
-        if(contactPerson == null){
-            String message = "ContactPerson cannot be null";
-            parkingLotLogger.error(message);
-            throw new IllegalArgumentException(message);
-        }
+        Validate.objectNotNull(contactPerson, "Contact person cannot be empty");
         return contactPerson;
     }
 
     private Category validateCategory(Category category){
-        if(category == null){
-            String message = "Category cannot be null";
-            parkingLotLogger.error(message);
-            throw new IllegalArgumentException(message);
-        }
+        Validate.objectNotNull(category, "Category cannot be empty");
         return category;
     }
 }

@@ -3,6 +3,7 @@ package com.controlaltinsert.parkshark.member.domain;
 import com.controlaltinsert.parkshark.member.level.domain.MembershipLevel;
 import com.controlaltinsert.parkshark.support.address.domain.Address;
 import com.controlaltinsert.parkshark.support.licenseplate.domain.LicensePlate;
+import com.controlaltinsert.parkshark.util.Validate;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
@@ -72,11 +73,7 @@ public class Member {
     }
 
     private LicensePlate validateLicensePlate(LicensePlate licensePlate) {
-        if (licensePlate == null) {
-            String errorMessage = "License plate can't be null";
-            memberLogger.error(errorMessage);
-            throw new IllegalArgumentException(errorMessage);
-        }
+        Validate.objectNotNull(licensePlate, "License plate cannot be empty");
         return licensePlate;
     }
 

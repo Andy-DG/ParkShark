@@ -5,10 +5,8 @@ import com.controlaltinsert.parkshark.division.api.dto.DivisionDTO;
 import com.controlaltinsert.parkshark.division.domain.Division;
 import com.controlaltinsert.parkshark.division.domain.DivisionRepository;
 import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
-import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.employee.service.EmployeeService;
-import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotListDTO;
-import com.controlaltinsert.parkshark.parkinglot.domain.ParkingLot;
+import com.controlaltinsert.parkshark.util.Validate;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +29,7 @@ public class DivisionService {
     public DivisionDTO createDivision(CreateDivisionDTO divisionDTO) {
         int headDivisionId = divisionDTO.getHeadDivisionId();
         Division headDivisionById = divisionRepository.findById(headDivisionId).orElse(null);
-        isNotNull(headDivisionById);
+        Validate.objectNotNull(headDivisionById, "This head division doesn't exist.");
         validateSubDivision(headDivisionById);
         Division division = divisionRepository.save(getEntity(divisionDTO));
         return getDTO(division);
@@ -42,14 +40,6 @@ public class DivisionService {
             String errorMessage = "Target head division is a subdivision";
             divisionLogger.error(errorMessage);
             throw new IllegalStateException(errorMessage);
-        }
-    }
-
-    private void isNotNull(Division headDivisionById) {
-        if (headDivisionById == null) {
-            String message = "This head division doesn't exist.";
-            divisionLogger.error(message);
-            throw new IllegalArgumentException(message);
         }
     }
 
@@ -65,17 +55,11 @@ public class DivisionService {
 
     public DivisionDTO getDivisionById(int divisionId) {
         Division division = divisionRepository.findById(divisionId).orElse(null);
-        assertDivisionExists(division);
+        Validate.objectNotNull(division, "Division not found!");
         return divisionMapper.toDTO(division);
     }
 
-    private void assertDivisionExists(Division division) {
-        if (division == null) {
-            String errorMessage = "Division not found!";
-            divisionLogger.error(errorMessage);
-            throw new IllegalArgumentException(errorMessage);
-        }
-    }
+
 
     public List<DivisionDTO> viewAllDivisions() {
         List<Division> divisions = divisionRepository.findAll();

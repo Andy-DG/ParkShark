@@ -1,6 +1,7 @@
 package com.controlaltinsert.parkshark.support.address.domain;
 
 import com.controlaltinsert.parkshark.support.postalcode.domain.PostalCode;
+import com.controlaltinsert.parkshark.util.Validate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -38,11 +39,7 @@ public class Address {
     }
 
     public String validateStreetName(String streetName) {
-        if (streetName == null || streetName.isBlank()) {
-            String errorMessage = "Street name can't be empty";
-            addressLogger.error(errorMessage);
-            throw new IllegalArgumentException(errorMessage);
-        }
+        Validate.validateString(streetName, "Address street name validated successfully");
         addressLogger.info("Address street name validated successfully");
         return streetName;
 }

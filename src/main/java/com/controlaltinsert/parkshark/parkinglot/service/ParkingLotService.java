@@ -1,16 +1,15 @@
 package com.controlaltinsert.parkshark.parkinglot.service;
 
 import com.controlaltinsert.parkshark.division.api.dto.DivisionDTO;
-import com.controlaltinsert.parkshark.division.domain.Division;
 import com.controlaltinsert.parkshark.division.service.DivisionService;
 import com.controlaltinsert.parkshark.employee.api.EmployeeDTO;
-import com.controlaltinsert.parkshark.employee.domain.Employee;
 import com.controlaltinsert.parkshark.employee.service.EmployeeService;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.CreateParkingLotDTO;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotDTO;
 import com.controlaltinsert.parkshark.parkinglot.api.dto.ParkingLotListDTO;
 import com.controlaltinsert.parkshark.parkinglot.domain.ParkingLot;
 import com.controlaltinsert.parkshark.parkinglot.domain.ParkingLotRepository;
+import com.controlaltinsert.parkshark.util.Validate;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -49,16 +48,8 @@ public class ParkingLotService {
 
     public ParkingLotDTO getParkingLotById(int parkingLotId) {
         ParkingLot parkingLot = parkingLotRepository.findById(parkingLotId).orElse(null);
-        assertParkingLotExists(parkingLot);
+        Validate.objectNotNull(parkingLot, "Parking lot not found.");
         return parkingLotMapper.toDTO(parkingLot);
-    }
-
-    private void assertParkingLotExists(ParkingLot parkingLot) {
-        if (parkingLot == null) {
-            String errorMessage = "Parking lot not found!";
-            parkingLotLogger.error(errorMessage);
-            throw new IllegalArgumentException(errorMessage);
-        }
     }
 
     public List<ParkingLotListDTO> viewAllParkingLots() {
