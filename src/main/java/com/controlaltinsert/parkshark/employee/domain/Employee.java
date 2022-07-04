@@ -3,6 +3,7 @@ package com.controlaltinsert.parkshark.employee.domain;
 
 import com.controlaltinsert.parkshark.support.address.domain.Address;
 import com.controlaltinsert.parkshark.util.Validate;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -54,6 +55,8 @@ public class Employee {
         this.email = Validate.validateEmail(email);
         employeeLogger.info("Created an employee successfully");
     }
+
+
 
 
     public void setId(int id) {
